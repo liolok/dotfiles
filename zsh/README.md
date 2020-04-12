@@ -1,4 +1,4 @@
-```shell
+```console
 $ stow zsh
 # pacman -S - < package.list
 # pkgfile --update # for command_not_found_handler
