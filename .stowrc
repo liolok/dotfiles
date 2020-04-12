@@ -1,0 +1,4 @@
+--target=$HOME # target folder regardless repository location
+--no-folding # create real directories and symlink only files
+--ignore package.list # do not symlink dependency list files
+--ignore README.md # do not symlink documentation files
