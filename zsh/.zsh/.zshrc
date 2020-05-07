@@ -43,8 +43,3 @@ alias stop="systemctl stop"
 alias status="systemctl status"
 alias restart="systemctl restart"
 alias neo="neofetch"
-
-# If $HOME is fake then so is `~`, use `~.` for real user home path.
-# For faking $HOME refer to ../../pam_env/.pam_environment.
-# http://zsh.sourceforge.net/Doc/Release/Expansion.html#Static-named-directories
-[[ $HOME != /home/$USER ]] && hash -d .=/home/$USER
