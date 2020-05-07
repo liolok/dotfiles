@@ -1,6 +1,6 @@
 # Mix `grml-zsh-config` and `powerline`
-prompt off #unset grml prompt
-powerline-daemon -q #run powerline daemon
+prompt off # unset grml prompt
+powerline-daemon -q # run powerline daemon
 . /usr/share/powerline/bindings/zsh/powerline.zsh
 
 # https://github.com/zsh-users/zsh-autosuggestions#usage
@@ -21,13 +21,13 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 . /usr/share/doc/pkgfile/command-not-found.zsh
 
 # Key Bindings for Gnome Terminal
-bindkey -M emacs '^[[3;5~' kill-word #C trl-Delete
-bindkey -M emacs '^H' backward-kill-word # Ctrl-Backspace
+bindkey -M emacs '^[[3;5~' kill-word # Ctrl + Delete
+bindkey -M emacs '^H' backward-kill-word # Ctrl + Backspace
 
 # Roll System
-# https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Removing_unused_packages_(orphans)
 function Syu() {
-    sudo pacman -Syu # upgrade all packages except AUR ones
+    sudo pacman -Syu # upgrade all packages except local ones
+    # https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Removing_unused_packages_(orphans)
     pacman -Qtdq | ifne sudo pacman -Rcs - # `ifne` depends on `moreutils`
 }
 
