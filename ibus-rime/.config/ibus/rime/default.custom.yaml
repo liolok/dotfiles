@@ -1,0 +1,29 @@
+# 参考默认配置及官方文档：https://github.com/rime/home/wiki/CustomizationGuide
+patch:
+  schema_list: # 输入方案列表
+    - schema: double_pinyin # ㄓ·双拼·自然码·简化字
+    - schema: pinyin_simp # 袖珍简化字拼音
+  switcher/caption: "〔输入方案菜单〕" # "〔方案選單〕"
+  switcher/hotkeys: [F4] # 输入方案菜单呼出快捷键
+  switcher/option_list_separator: " / " # "／" # 折叠选项分隔符
+  switcher/abbreviate_options: false # 缩写菜单选项
+  switcher/fold_options: false # 折叠菜单选项
+  ascii_composer/switch_key/Shift_L: noop # inline_ascii
+  ascii_composer/switch_key/Shift_R: noop # commit_text
+  menu/page_size: 10 # 5
+  key_binder/bindings:
+    # Tab 从左向右在单字拼音间移动光标，默认的 Shift+Tab 向左移动经多方测试无效。
+    # - {accept: "Shift+Tab", send: "Shift+Left", when: composing}
+    - {accept: Tab, send: "Shift+Right", when: composing}
+    # 候选词翻页：减号等号
+    - {accept: minus, send: Page_Up, when: has_menu}
+    - {accept: equal, send: Page_Down, when: has_menu}
+    # 候选词翻页：逗号句号
+    # - {accept: comma, send: Page_Up, when: paging}
+    # - {accept: period, send: Page_Down, when: has_menu}
+    # [Shift + 空格] 切换 [全角]
+    # - {accept: "Shift+space", toggle: full_shape, when: always}
+    # [Ctrl + 逗号] 切换 [中英文标点]
+    # - {accept: "Control+period", toggle: ascii_punct, when: always}
+    # [Ctrl + 空格] 切换 [中英文]
+    # - {accept: "Control+space", toggle: ascii_mode, when: always}

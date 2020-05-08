@@ -1,0 +1,57 @@
+# 参考默认配置及雪斋的文档：https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md
+patch:
+  schema:
+    name: "ㄓ·双拼·自然码·简化字"
+    author: ["佛振 <chen.sst@gmail.com>", "李皓奇 <rime@liolok.com>"]
+    description: "基于袖珍简化字拼音的自然码双拼输入方案"
+    dependencies: [pinyin_simp, stroke] # 袖珍简化字拼音、五笔（用于反查）
+  switches: # 输入方案菜单
+    - name: ascii_mode
+      reset: 0 # 中文模式，并隐藏切换选项。
+    - name: full_shape
+      states: ["半角", "全角"]
+    - name: simplification
+      reset: 1 # 简化汉字，并隐藏切换选项。
+    - name: ascii_punct
+      states: ["。，", "．，"]
+  translator/dictionary: pinyin_simp # 袖珍拼音简化字
+  translator/preedit_format: # 双拼原始拼音转换为全拼拼音
+  recognizer/patterns/reverse_lookup: # "`[a-z]*'?$" # 默认反引号开启反查模式
+  reverse_lookup/dictionary: # stroke # 反查码表，默认为五笔。
+  punctuator/half_shape: # 半角标点符号定义
+    # 1234567890
+    "`": "`"
+    "~": "~" # ["~", "～"]
+    "!": "！"
+    "@": "@"
+    "#": "#"
+    "$": "$" # ["￥", "$", "€", "£", "¥", "¢", "¤"]
+    "%": "%" # ["%", "％", "°", "℃"]
+    "^": "^" # "……"
+    "&": "&"
+    "*": "*" # ["*", "＊", "·", "・", "×", "※", "❂"]
+    "(": "(" # "（"
+    ")": ")" #  "）"
+    "-": "-"
+    "_": "_" # "——"
+    "=": "="
+    "+": "+"
+    # QWERTYUIOP
+    "[": "（" # ["「", "【", "〔", "［"]
+    "]": "）" # ["」", "】", "〕", "］"]
+    "{": "[" # ["『", "〖", "｛"]
+    "}": "]" # ["』", "〗", "｝"]
+    "\\": "、" # ["、", "\\", "＼"]
+    "|": "\\" # ["·", "|", "｜", "§", "¦"]
+    # ASDFGHJKL
+    ";": "；"
+    ":": "："
+    "'": "'" # {pair: ["‘", "’"]}
+    "\"": {pair: ["“", "”"]}
+    # ZXCVBNM
+    ",": "，"
+    ".": "。"
+    "<": "," # ["《", "〈", "«", "‹"]
+    ">": "." # ["》", "〉", "»", "›"]
+    "/": "/" # ["、", "/", "／", "÷"]
+    "?": "？"
