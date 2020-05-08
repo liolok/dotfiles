@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "**/fontconfig/**/*.conf": "xml",
+        ".pam_environment": "properties",
+        ".stowrc": "shellscript"
+    }
+}
