@@ -19,9 +19,6 @@
 # Values can be delimited with "", escaped " not supported.
 # Comment lines start with "#" (no space at front), no inline comment support.
 
-# Real user directory for non-root, SHOULD test existence before usage.
-REAL_HOME DEFAULT=/home/@{PAM_USER}
-
 # XDG base directory specification, modified with a simple data directory.
 # (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
 XDG_CACHE_HOME  DEFAULT=@{HOME}/.cache
@@ -31,8 +28,7 @@ XDG_DATA_HOME   DEFAULT=@{HOME}/.data
 # Executable file search directories, separated by colon.
 # (https://en.wikipedia.org/wiki/PATH_(variable)#Unix_and_Unix-like)
 # (https://wiki.archlinux.org/index.php/Environment_variables#Examples)
-PATH DEFAULT=${REAL_HOME}/scripts:/usr/local/bin:/usr/local/sbin:/bin
-# Note: `${REAL_HOME}/scripts` may not exist, what a shame.
+PATH DEFAULT=@{HOME}/.bin:/usr/local/bin:/usr/local/sbin:/bin
 
 # Qt theme platform under non-KDE
 # Plan A: Simply follow GTK2 through `qt5-styleplugins`
