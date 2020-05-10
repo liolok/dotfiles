@@ -1,7 +1,10 @@
 #!/bin/bash
+set -e # exit on fail
 apps=$* # all arguments
 stow --verbose --restow $apps # symlink configurations
-for app in $apps; do if [[ -f $app/package.list ]]; then
-    packages+=" $(cat $app/package.list)"
-fi done # collect dependencies
+for app in $apps; do
+    if [[ -f $app/package.list ]]; then
+        packages+=" $(cat $app/package.list)"
+    fi # collect dependencies
+done
 [[ -n $packages ]] && sudo pacman -S --needed $packages # install dependencies
