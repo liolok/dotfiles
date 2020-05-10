@@ -28,7 +28,7 @@ XDG_DATA_HOME   DEFAULT=@{HOME}/.data
 # Executable file search directories, separated by colon.
 # (https://en.wikipedia.org/wiki/PATH_(variable)#Unix_and_Unix-like)
 # (https://wiki.archlinux.org/index.php/Environment_variables#Examples)
-PATH DEFAULT=@{HOME}/.bin:/usr/local/bin:/usr/local/sbin:/bin
+PATH DEFAULT=@{HOME}/.bin:/usr/local/sbin:/usr/local/bin:/bin
 
 # Qt theme platform under non-KDE
 # Plan A: Simply follow GTK2 through `qt5-styleplugins`
