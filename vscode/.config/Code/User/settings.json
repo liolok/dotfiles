@@ -1,0 +1,47 @@
+{
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.cursorBlinking": "phase",
+    "editor.find.addExtraSpaceOnTop": false,
+    "editor.find.autoFindInSelection": "multiline",
+    "editor.minimap.showSlider": "always",
+    "editor.multiCursorModifier": "alt",
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?，。？；：‘“”、（）！…—",
+    "files.associations": {
+        "*.json": "jsonc"
+    },
+    "files.autoGuessEncoding": true,
+    "files.autoSave": "afterDelay",
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.simpleDialog.enable": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "git.enableCommitSigning": true,
+    "html.format.endWithNewline": true,
+    "spellright.configurationScope": "user",
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "spellright.language": [
+        "en_US"
+    ],
+    "spellright.notificationClass": "information",
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "terminal.integrated.experimentalUseTitleEvent": true,
+    "terminal.integrated.rendererType": "dom",
+    "update.mode": "none",
+    "update.showReleaseNotes": false,
+    "window.openFilesInNewWindow": "on",
+    "workbench.activityBar.visible": true,
+    "workbench.colorTheme": "Arc Dark Theme",
+    "workbench.settings.useSplitJSON": true,
+    "workbench.sideBar.location": "right",
+    "workbench.startupEditor": "none"
+}
