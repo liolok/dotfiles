@@ -10,6 +10,7 @@
 # Syntax:
 # This file is coded as the user specific equivalent of configuration file
 # `/etc/security/pam_env.conf`, rather than environment file `/etc/environment`.
+# (https://wiki.archlinux.org/index.php/Environment_variables#Using_pam_env)
 # (https://wiki.archlinux.org/index.php/.pam_environment)
 # (https://github.com/linux-pam/linux-pam/issues/6)
 # VARIABLE [DEFAULT=[value]] [OVERRIDE=[value]]
