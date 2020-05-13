@@ -28,9 +28,10 @@ XDG_DATA_HOME   DEFAULT=@{HOME}/.data
 
 # Qt theme platform under non-KDE
 # Plan A: Simply follow GTK2 through `qt5-styleplugins`
+# NOT nice-looking enough, go on with plan B.
 # (https://wiki.archlinux.org/index.php/Uniform_look_for_Qt_and_GTK_applications#QGtkStyle)
-QT_QPA_PLATFORMTHEME DEFAULT=gtk2
+# QT_QPA_PLATFORMTHEME DEFAULT=gtk2
 # Plan B: Gain more control by `qt5ct` along with `kvantum-qt5` and `kvantum-theme-*`
 # (https://wiki.archlinux.org/index.php/Qt#Configuration_of_Qt5_apps_under_environments_other_than_KDE_Plasma)
 # (https://wiki.archlinux.org/index.php/Uniform_look_for_Qt_and_GTK_applications#Kvantum)
-# QT_QPA_PLATFORMTHEME DEFAULT=qt5ct
+QT_QPA_PLATFORMTHEME DEFAULT=qt5ct
