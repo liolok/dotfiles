@@ -20,6 +20,9 @@
 # Values can be delimited with "", escaped " not supported.
 # Comment lines start with "#" (no space at front), no inline comment support.
 
+# This directory MUST be tested before any usage.
+HOME_USER DEFAULT=/home/@{PAM_USER}
+
 # XDG base directory specification, modified with a simple data directory.
 # (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
 XDG_CACHE_HOME  DEFAULT=@{HOME}/.cache
