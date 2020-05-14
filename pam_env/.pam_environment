@@ -29,6 +29,21 @@ XDG_CACHE_HOME  DEFAULT=@{HOME}/.cache
 XDG_CONFIG_HOME DEFAULT=@{HOME}/.config
 XDG_DATA_HOME   DEFAULT=@{HOME}/.data
 
+# Fix support for XDG base directory specification
+# (https://wiki.archlinux.org/index.php/XDG_Base_Directory#Support)
+# adb
+# (https://developer.android.com/studio/command-line/variables#android_sdk_root)
+ANDROID_SDK_HOME DEFAULT=${XDG_DATA_HOME}/android/sdk
+ADB_VENDOR_KEY   DEFAULT=${XDG_DATA_HOME}/android/adb
+# bash history
+HISTFILE DEFAULT=${XDG_DATA_HOME}/bash/history
+# ipython
+IPYTHONDIR DEFAULT=${XDG_DATA_HOME}/ipython
+# python
+PYTHONSTARTUP DEFAULT=${XDG_CONFIG_HOME}/python/rc.py
+# python-pylint
+PYLINTHOME DEFAULT=${XDG_CACHE_HOME}/python-pylint
+
 # Qt theme platform under non-KDE
 # Plan A: Simply follow GTK2 through `qt5-styleplugins`
 # NOT nice-looking enough, go on with plan B.
