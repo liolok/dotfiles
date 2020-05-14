@@ -1,0 +1,22 @@
+[Desktop Entry]
+
+# The type as listed above
+Type=Application
+
+# The name of the application
+Name=Steam
+
+# A comment which can/will be used as a tooltip
+Comment=Vivado Design Suite is a software suite produced by Xilinx for synthesis and analysis of HDL designs, superseding Xilinx ISE with additional features for system on a chip development and high-level synthesis.
+
+# The executable of the application, possibly with arguments.
+Exec=/home/liolok/scripts/steam
+
+# The name of the icon that will be used to display this entry
+Icon=steam
+
+# # Describes whether this application needs to be run in a terminal or not
+# Terminal=false
+
+# Describes the categories in which this entry should be shown
+Categories=Game
