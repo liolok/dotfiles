@@ -10,7 +10,7 @@ patch:
   switcher/fold_options: false # 折叠菜单选项
   ascii_composer/switch_key/Shift_L: noop # inline_ascii
   ascii_composer/switch_key/Shift_R: noop # commit_text
-  menu/page_size: 10 # 5
+  menu/page_size: 9 # 5
   key_binder/bindings:
     # Tab 从左向右在单字拼音间移动光标，默认的 Shift+Tab 向左移动经多方测试无效。
     # - {accept: "Shift+Tab", send: "Shift+Left", when: composing}
