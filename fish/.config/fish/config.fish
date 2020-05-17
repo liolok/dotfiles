@@ -17,10 +17,11 @@ string match --quiet '*pts*' (tty) && powerline-setup
 
 # Abbreviations
 # (https://fishshell.com/docs/current/cmds/abbr.html)
-abbr --add neo neofetch
 # Use `-` as `cd -` to move to previous directory, for consistency with auto-cd.
 # (https://github.com/fish-shell/fish-shell/issues/709#issuecomment-261745982)
 abbr --add - 'cd -'
+abbr --add freeman 'free --human'
+abbr --add neo 'neofetch'
 
 # Aliases
 # (https://fishshell.com/docs/current/cmds/alias.html)
