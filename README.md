@@ -1,6 +1,8 @@
 # liolok's dotfiles
 
-App config files of liolok, [managed with `git` and `stow`](https://liolok.github.io/Manage-Dotfiles-with-Git-and-Stow/).
+App config files of liolok, managed with `git` and `stow` <sup>[[my post]][1]</sup>.
+
+[1]: https://liolok.github.io/Manage-Dotfiles-with-Git-and-Stow/
 
 ## Workflow
 
