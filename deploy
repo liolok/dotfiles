@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e # exit on fail
 apps=$* # all arguments
+cd $(dirname "$0") # change working directory to here
 stow --verbose --restow $apps # symlink configurations
 for app in $apps; do
     if [[ -f $app/package.list ]]; then
