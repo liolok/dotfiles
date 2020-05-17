@@ -2,19 +2,14 @@
 
 App config files of liolok, [managed with `git` and `stow`](https://liolok.github.io/Manage-Dotfiles-with-Git-and-Stow/).
 
-## Dependencies
+## Workflow
+
+To deploy apps, e.g. `fish` and `tmux`:
 
 ```console
-# pacman -Syu git stow sudo
-$ chmod u+x deploy
-```
-
-## Usage
-
-To deploy apps, e.g. `fish` and `fontconfig`, just run:
-
-```console
-$ ./deploy fish fontconfig
+# pacman -Syyu git stow sudo
+$ git clone https://github.com/liolok/dotfiles
+$ ./dotfiles/deploy fish tmux
 ```
 
 ## Acknowledgement
