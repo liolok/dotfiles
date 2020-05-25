@@ -20,7 +20,7 @@ string match --quiet '*pts*' (tty) && powerline-setup
 # Use `-` as `cd -` to move to previous directory, for consistency with auto-cd.
 # (https://github.com/fish-shell/fish-shell/issues/709#issuecomment-261745982)
 abbr --add - 'cd -'
-abbr --add freeman 'free --human'
+abbr --add fh 'free --human'
 abbr --add neo 'neofetch'
 
 # Aliases
