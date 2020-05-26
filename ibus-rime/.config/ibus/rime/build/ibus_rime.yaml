@@ -1,5 +1,0 @@
-# Dirty configurations due to upstream issue
-# Issue: (https://github.com/rime/ibus-rime/issues/42)
-# Source: (https://forums.fedoraforum.org/showthread.php?320042-How-to-set-ibus-rime-to-horizontal-in-fedora-29)
-style:
-  horizontal: true
