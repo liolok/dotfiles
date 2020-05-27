@@ -53,3 +53,8 @@ PYLINTHOME DEFAULT=${XDG_CACHE_HOME}/python-pylint
 # (https://wiki.archlinux.org/index.php/Qt#Configuration_of_Qt5_apps_under_environments_other_than_KDE_Plasma)
 # (https://wiki.archlinux.org/index.php/Uniform_look_for_Qt_and_GTK_applications#Kvantum)
 QT_QPA_PLATFORMTHEME DEFAULT=qt5ct
+
+# Input Method
+GTK_IM_MODULE DEFAULT=fcitx
+QT_IM_MODULE  DEFAULT=fcitx
+XMODIFIERS    DEFAULT=@im=fcitx
