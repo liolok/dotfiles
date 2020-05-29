@@ -10,4 +10,5 @@
 !/.data/
 
 # other apps
+!fcitx5/
 !fish/
