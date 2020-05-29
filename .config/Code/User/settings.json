@@ -11,6 +11,10 @@
     ],
     "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?，。？；：‘“”、（）！…—",
     "files.associations": {
+        "**/fcitx5/config": "properties",
+        "**/fcitx5/profile": "properties",
+        "**/fontconfig/**/*.conf": "xml",
+        "**/Kvantum/*.kvconfig": "properties",
         "*.desktop": "properties",
         "*.json": "jsonc",
         ".pam_environment": "properties"
@@ -22,6 +26,7 @@
     "files.simpleDialog.enable": true,
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
+    "git.autofetch": true,
     "git.enableCommitSigning": true,
     "gitlens.showWhatsNewAfterUpgrades": false,
     "html.format.endWithNewline": true,
@@ -44,6 +49,7 @@
     "window.openFilesInNewWindow": "on",
     "workbench.activityBar.visible": true,
     "workbench.colorTheme": "Arc Dark Theme",
+    "workbench.enableExperiments": false,
     "workbench.settings.useSplitJSON": true,
     "workbench.sideBar.location": "right",
     "workbench.startupEditor": "none"
