@@ -10,5 +10,6 @@
 !/.data/
 
 # other apps
+!electron-netease-cloud-music/
 !fcitx5/
 !fish/

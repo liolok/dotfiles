@@ -1,0 +1,15 @@
+{
+    "autoPlay": false,
+    "autoSign": true,
+    "bitRate": "h",
+    "filterRcmd": true,
+    "startupPage": "favorite",
+    "windowBorder": true,
+    "windowZoom": null,
+    "showTrayIcon": true,
+    "trayIconVariety": "light",
+    "exitOnWindowClose": false,
+    "themePrimaryColor": "#303440",
+    "themeSecondaryColor": "#d50000",
+    "themeVariety": "light"
+}
