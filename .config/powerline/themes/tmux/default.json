@@ -1,0 +1,24 @@
+{
+    "_comments": {
+        "default-file": "/usr/lib/python3.8/site-packages/powerline/config_files/themes/tmux/default.json",
+        "reference": "https://powerline.readthedocs.io/en/latest/configuration/segments/common.html"
+    },
+    "segments": {
+        "right": [
+            {
+                "function": "powerline.segments.common.time.date"
+            },
+            {
+                "function": "powerline.segments.common.time.date",
+                "name": "time",
+                "args": {
+                    "format": "%H:%M",
+                    "istime": true
+                }
+            },
+            {
+                "function": "powerline.segments.common.net.hostname"
+            }
+        ]
+    }
+}
