@@ -1,0 +1,66 @@
+# User config of pam_env: the PAM module to set/unset environment variables.
+# (http://www.linux-pam.org/Linux-PAM-html/sag-pam_env.html)
+
+# Path:
+# This file defaults to `$HOME/.pam_environment`, and could be overriden ONLY at
+# system level: Edit `/etc/pam.d/system-login` file, at maybe the last line
+# `session required pam_env.so` append `user_envfile=.config/pam_env.conf`, in
+# which the path is relative to every user's home directory.
+
+# Syntax:
+# This file is coded as the user specific equivalent of configuration file
+# `/etc/security/pam_env.conf`, rather than environment file `/etc/environment`.
+# (https://wiki.archlinux.org/index.php/Environment_variables#Using_pam_env)
+# (https://wiki.archlinux.org/index.php/.pam_environment)
+# (https://github.com/linux-pam/linux-pam/issues/6)
+# VARIABLE [DEFAULT=[value]] [OVERRIDE=[value]]
+# Variables may be used in values using ${VARIABLE}
+# PAM_ITEMs may be used in values using @{PAM_ITEM}
+# Both the $ and @ can be backslash escaped to be used as literal values.
+# Values can be delimited with "", escaped " not supported.
+# Comment lines start with "#" (no space at front), no inline comment support.
+
+# Executable file search path list
+# (https://wiki.archlinux.org/index.php/Environment_variables#Examples)
+# (https://en.wikipedia.org/wiki/PATH_(variable)#Unix_and_Unix-like)
+PATH DEFAULT=@{HOME}/.bin:${PATH}
+
+# Use nano as default text editor
+# (https://wiki.archlinux.org/index.php/Nano#Replacing_vi_with_nano)
+EDITOR DEFAULT=nano
+VISUAL DEFAULT=nano
+
+# XDG base directory specification, modified with a simple data directory.
+# (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+XDG_CACHE_HOME  DEFAULT=@{HOME}/.cache
+XDG_CONFIG_HOME DEFAULT=@{HOME}/.config
+XDG_DATA_HOME   DEFAULT=@{HOME}/.data
+
+# Workarounds for XDG base directory specification
+# (https://wiki.archlinux.org/index.php/XDG_Base_Directory#Support)
+# adb
+ADB_VENDOR_KEY   DEFAULT=${XDG_DATA_HOME}/adb
+ANDROID_SDK_HOME DEFAULT=${XDG_DATA_HOME}/android-sdk
+# bash history
+HISTFILE DEFAULT=${XDG_DATA_HOME}/bash/history
+# ipython
+IPYTHONDIR DEFAULT=${XDG_DATA_HOME}/ipython
+# python
+PYTHONSTARTUP DEFAULT=${XDG_CONFIG_HOME}/python/rc.py
+# python-pylint
+PYLINTHOME DEFAULT=${XDG_CACHE_HOME}/python-pylint
+
+# Qt theme platform under non-KDE
+# Plan A: Simply follow GTK2 through `qt5-styleplugins`
+# NOT nice-looking enough, go on with plan B.
+# (https://wiki.archlinux.org/index.php/Uniform_look_for_Qt_and_GTK_applications#QGtkStyle)
+# QT_QPA_PLATFORMTHEME DEFAULT=gtk2
+# Plan B: Gain more control by `qt5ct` along with `kvantum-qt5` and `kvantum-theme-*`
+# (https://wiki.archlinux.org/index.php/Qt#Configuration_of_Qt5_apps_under_environments_other_than_KDE_Plasma)
+# (https://wiki.archlinux.org/index.php/Uniform_look_for_Qt_and_GTK_applications#Kvantum)
+QT_QPA_PLATFORMTHEME DEFAULT=qt5ct
+
+# Input method
+GTK_IM_MODULE DEFAULT=fcitx
+QT_IM_MODULE  DEFAULT=fcitx
+XMODIFIERS    DEFAULT=\@im=fcitx
