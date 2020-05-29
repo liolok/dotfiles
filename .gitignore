@@ -11,6 +11,7 @@
 
 # other apps
 !autostart/
+!Code/
 !electron-netease-cloud-music/
 !fcitx5/
 !fish/
