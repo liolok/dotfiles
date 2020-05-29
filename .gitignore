@@ -10,6 +10,7 @@
 !/.data/
 
 # other apps
+!autostart/
 !electron-netease-cloud-music/
 !fcitx5/
 !fish/
