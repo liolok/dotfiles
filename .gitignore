@@ -12,6 +12,7 @@
 # other apps
 !autostart/
 !Code/
+!Dharkael/
 !electron-netease-cloud-music/
 !fcitx5/
 !fish/
