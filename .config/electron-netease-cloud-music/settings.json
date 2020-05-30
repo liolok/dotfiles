@@ -1,15 +1,16 @@
 {
     "autoPlay": false,
+    "autoReplacePlaylist": true,
     "autoSign": true,
     "bitRate": "h",
-    "filterRcmd": true,
-    "startupPage": "favorite",
-    "windowBorder": true,
-    "windowZoom": null,
-    "showTrayIcon": true,
-    "trayIconVariety": "light",
     "exitOnWindowClose": false,
+    "filterRcmd": true,
+    "showTrayIcon": false,
+    "startupPage": "favorite",
     "themePrimaryColor": "#303440",
     "themeSecondaryColor": "#d50000",
-    "themeVariety": "light"
+    "themeVariety": "light",
+    "trayIconVariety": "light",
+    "windowBorder": true,
+    "windowZoom": null
 }
