@@ -58,7 +58,11 @@ PYLINTHOME DEFAULT=${XDG_CACHE_HOME}/python-pylint
 # Plan B: Gain more control by `qt5ct` along with `kvantum-qt5` and `kvantum-theme-*`
 # (https://wiki.archlinux.org/index.php/Qt#Configuration_of_Qt5_apps_under_environments_other_than_KDE_Plasma)
 # (https://wiki.archlinux.org/index.php/Uniform_look_for_Qt_and_GTK_applications#Kvantum)
-QT_QPA_PLATFORMTHEME DEFAULT=qt5ct
+# QT_QPA_PLATFORMTHEME DEFAULT=qt5ct
+# Plan C: Directly use `kvantum` without `qt5ct`.
+# (https://github.com/tsujan/Kvantum/issues/221#issuecomment-401081491)
+# QT_QPA_PLATFORMTHEME DEFAULT=gnome
+QT_STYLE_OVERRIDE DEFAULT=kvantum
 
 # Input method
 GTK_IM_MODULE DEFAULT=fcitx
