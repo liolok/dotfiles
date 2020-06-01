@@ -7,16 +7,18 @@
     "editor.multiCursorModifier": "alt",
     "editor.rulers": [
         80,
+        100,
         120
     ],
     "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?，。？；：‘“”、（）！…—",
     "files.associations": {
+        "**/Kvantum/*.kvconfig": "properties",
         "**/fcitx5/config": "properties",
         "**/fcitx5/profile": "properties",
         "**/fontconfig/**/*.conf": "xml",
-        "**/Kvantum/*.kvconfig": "properties",
         "*.desktop": "properties",
         "*.json": "jsonc",
+        "*rc": "shellscript",
         ".pam_environment": "properties"
     },
     "files.autoGuessEncoding": true,
