@@ -12,6 +12,9 @@
 !/.config/
 !/.data/
 
+# ssh
+!/.ssh/
+
 # other apps
 !autostart/
 !Code/
