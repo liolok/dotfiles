@@ -22,8 +22,8 @@
 
 # Executable file search path list
 # (https://wiki.archlinux.org/index.php/Environment_variables#Examples)
-# (https://en.wikipedia.org/wiki/PATH_(variable)#Unix_and_Unix-like)
-PATH DEFAULT=@{HOME}/.bin:${PATH}
+# Prepend user binary dir to `ENV_PATH` in `/etc/login.defs`
+PATH DEFAULT=@{HOME}/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin
 
 # Use nano as default text editor
 # (https://wiki.archlinux.org/index.php/Nano#Replacing_vi_with_nano)
