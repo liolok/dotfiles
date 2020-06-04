@@ -4,6 +4,7 @@
 !.gitignore
 
 # bash
+!/.bash_login
 !/.bashrc
 
 # pam_env
