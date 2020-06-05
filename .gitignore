@@ -16,6 +16,9 @@
 # ssh
 !/.ssh/
 
+# my scripts
+!boot-params/
+
 # other apps
 !autostart/
 !Code/
