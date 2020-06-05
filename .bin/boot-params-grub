@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Test reading user-specific kernel parameters config file for current machine
+config_file=${XDG_CONFIG_HOME:=$HOME/.config}/boot-params/$HOSTNAME.conf
+if [[ ! -r $config_file ]]; then echo "Unable to read $config_file"; exit 1; fi
+
+# Extract parameters from config file into one line
+regexp_params='^[^#]*' # ignore sharp and the rest of line behind sharp
+# Use grep to match parameters, use echo to remove newlines and trim whitespaces
+params=$(echo $(grep --only-matching "$regexp_params" "$config_file"))
+
+# Test parameters length for validation
+[[ -z $params ]] && echo "No valid parameters read from $config_file" && exit 2
+echo "[1] Parameters read from $config_file:"
+echo "$params"
+
+# Configure GRUB
+# (https://wiki.archlinux.org/index.php/Kernel_parameters#GRUB)
+# Replace whole line of original variable with name="parameters"
+regexp_grub="^GRUB_CMDLINE_LINUX_DEFAULT=.*"
+grub=$(grep --only-matching "$regexp_grub" /etc/default/grub)
+grub_new="GRUB_CMDLINE_LINUX_DEFAULT=\"$params\""
+[[ $grub_new == $grub ]] && echo "[2] Same old parameters, nothing to do." && exit
+backup_suffix=".$(date +%F.%T)"
+sudo sed "s/$grub/$grub_new/g" etc/default/grub --in-place=$backup_suffix
+echo "[2] /etc/default/grub updated, backup saved as /etc/default/grub$backup_suffix"
+sudo grub-mkconfig --output=/boot/grub/grub.cfg # generate configuration file

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Launch app from systemd-nspawn container
+app_name=$(basename $BASH_SOURCE) # get from file name
+
+# Commandline options for systemd-nspawn
+options=(--as-pid2)
+
+# Path to container root directory
+container_dir=/var/lib/machines
+options+=(--directory=$container_dir/$app_name)
+
+# User and work directory in container
+container_user=liolok
+container_home=/home/$container_user
+options+=(--user=$container_user --chdir=$container_home)
+
+# Icons
+options+=(--bind-ro=/usr/share/icons:$container_home/.local/share/icons
+          --setenv=XCURSOR_PATH=$container_home/.local/share/icons) # fix cursor icon
+
+# Fonts
+options+=(--bind-ro=/usr/share/fonts:$container_home/.local/share/fonts
+          --bind-ro=$HOME/.config/fontconfig:$container_home/.config/fontconfig)
+
+# Vivado Projects
+options+=(--bind=/home/$USER/Vivado/:$container_home/Vivado)
+
+# Authorization for X
+# xauth_file=/tmp/xauth-$container_name
+# xauth nextract - "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$xauth_file" nmerge -
+# options+=(--bind=$xauth_file --setenv=XAUTHORITY=$xauth_file)
+
+# Display
+options+=(--bind-ro=/tmp/.X11-unix/ --setenv=DISPLAY=$DISPLAY)
+
+echo "List of options applied to systemd-nspawn:"
+printf "%s\n" "${options[@]}" | sort
+
+# Run container directly into target application
+sudo systemd-nspawn ${options[*]} $app_name

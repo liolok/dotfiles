@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Launch app from systemd-nspawn container
+app_name=$(basename $BASH_SOURCE) # get from file name
+
+# Commandline options for systemd-nspawn
+options=(--as-pid2)
+
+# Path to container root directory
+container_dir=/var/lib/machines
+options+=(--directory=$container_dir/$app_name)
+
+# User and work directory in container
+container_user=liolok
+container_home=/home/$container_user
+options+=(--user=$container_user --chdir=$container_home)
+
+# System tray
+if [[ -n $DBUS_SESSION_BUS_ADDRESS ]]; then host_bus=${DBUS_SESSION_BUS_ADDRESS#unix:path=};
+else host_bus=/run/user/$UID/bus; fi
+container_bus=/run/user/host/bus
+options+=(--bind-ro=$host_bus:$container_bus
+          --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=$container_bus)
+
+# Sound
+if [[ -n $PULSE_SERVER ]]; then host_pulse=${PULSE_SERVER#unix:};
+else host_pulse=/run/user/$UID/pulse/native; fi
+container_pulse=/run/user/host/pulse
+options+=(--bind-ro=$host_pulse:$container_pulse
+          --setenv=PULSE_SERVER=unix:$container_pulse)
+
+# Icons
+options+=(--bind-ro=/usr/share/icons:$container_home/.local/share/icons)
+
+# Fonts
+options+=(--bind-ro=/usr/share/fonts:$container_home/.local/share/fonts
+          --bind-ro=$HOME/.config/fontconfig:$container_home/.config/fontconfig)
+
+# Screentshots
+options+=(--bind=/home/$USER/Pictures/Screenshots/Steam:$container_home/SteamScreenshots)
+
+# Authorization for X
+# xauth_file=/tmp/xauth-$container_name
+# xauth nextract - "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$xauth_file" nmerge -
+# options+=(--bind=$xauth_file --setenv=XAUTHORITY=$xauth_file)
+
+# Display
+options+=(--bind-ro=/tmp/.X11-unix/ --setenv=DISPLAY=$DISPLAY)
+
+# GPU and input devices
+options+=(--bind=/dev/dri/ --bind=/dev/input/)
+
+# Scale
+options+=(--setenv=GDK_SCALE=2 --setenv=GDK_DPI_SCALE=0.5)
+
+echo "List of cmdline options applied to systemd-nspawn:"
+printf "%s\n" "${options[@]}" | sort
+
+# Run container directly into target application
+sudo systemd-nspawn ${options[*]} $app_name
