@@ -22,6 +22,7 @@ string match --quiet '*pts*' (tty) && powerline-setup
 abbr --add - 'cd -'
 abbr --add fh 'free --human'
 abbr --add neo 'neofetch'
+abbr --add pm 'pacman'
 abbr --add sys 'systemctl'
 
 # Aliases
