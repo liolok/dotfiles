@@ -11,9 +11,7 @@ container_dir=/var/lib/machines
 options+=(--directory=$container_dir/$app_name)
 
 # User and work directory in container
-container_user=liolok
-container_home=/home/$container_user
-options+=(--user=$container_user --chdir=$container_home)
+options+=(--user=$app_name --chdir=/home/$app_name)
 
 # System tray
 if [[ -n $DBUS_SESSION_BUS_ADDRESS ]]; then host_bus=${DBUS_SESSION_BUS_ADDRESS#unix:path=};
@@ -30,14 +28,15 @@ options+=(--bind-ro=$host_pulse:$container_pulse
           --setenv=PULSE_SERVER=unix:$container_pulse)
 
 # Icons
-options+=(--bind-ro=/usr/share/icons:$container_home/.local/share/icons)
+options+=(--bind-ro=/usr/share/icons:/home/$app_name/.local/share/icons
+          --setenv=XCURSOR_PATH=/home/$app_name/.local/share/icons) # fix cursor icon
 
 # Fonts
-options+=(--bind-ro=/usr/share/fonts:$container_home/.local/share/fonts
-          --bind-ro=$HOME/.config/fontconfig:$container_home/.config/fontconfig)
+options+=(--bind-ro=/usr/share/fonts:/home/$app_name/.local/share/fonts
+          --bind-ro=$HOME/.config/fontconfig:/home/$app_name/.config/fontconfig)
 
 # Screentshots
-options+=(--bind=/home/$USER/Pictures/Screenshots/Steam:$container_home/SteamScreenshots)
+options+=(--bind=/home/$USER/Pictures/Screenshots/Steam:/home/$app_name/screenshots)
 
 # Authorization for X
 # xauth_file=/tmp/xauth-$container_name
