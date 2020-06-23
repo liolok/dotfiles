@@ -2,3 +2,4 @@
 
 su --shell=/bin/bash --command='pacman -Syu --need - < ${XDG_CONFIG_HOME:=$HOME/.config}/dependency-lists/shell'
 chsh --shell /bin/fish
+rm --verbose ~/.bash*
