@@ -1,0 +1,8 @@
+[alias]
+	cm = commit -m
+	co = checkout
+	l = log --pretty=format:"%C(yellow)%h\\ %Creset%s"
+	s = status --branch --short
+	undo = reset HEAD^
+[core]
+	autocrlf = input
