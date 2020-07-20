@@ -1,4 +1,4 @@
-# PYTHONSTARTUP=$XDG_CONFIG_HOME/python/startup.py
+# PYTHONSTARTUP=$XDG_CONFIG_HOME/python/rc.py
 # (https://docs.python.org/3/library/readline.html?#example)
 # (https://bugs.python.org/msg318437)
 import atexit
@@ -8,11 +8,9 @@ import readline
 if 'PYTHONHISTFILE' in os.environ:
     histfile = os.path.expanduser(os.environ['PYTHONHISTFILE'])
 elif 'XDG_DATA_HOME' in os.environ:
-    histfile = os.path.join(os.path.expanduser(os.environ['XDG_DATA_HOME']),
-                            'python', 'history')
+    histfile = os.path.join(os.path.expanduser(os.environ['XDG_DATA_HOME']), 'python', 'history')
 else:
-    histfile = os.path.join(os.path.expanduser('~'), '.local', 'share',
-                            'python', 'history')
+    histfile = os.path.join(os.path.expanduser('~'), '.local', 'share', 'python', 'history')
 
 try:
     readline.read_history_file(histfile)
