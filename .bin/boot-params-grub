@@ -22,6 +22,6 @@ grub=$(grep --only-matching "$regexp_grub" /etc/default/grub)
 grub_new="GRUB_CMDLINE_LINUX_DEFAULT=\"$params\""
 [[ $grub_new == $grub ]] && echo "[2] Same old parameters, nothing to do." && exit
 backup_suffix=".$(date +%F.%T)"
-sudo sed "s/$grub/$grub_new/g" etc/default/grub --in-place=$backup_suffix
+sudo sed "s/$grub/$grub_new/g" /etc/default/grub --in-place=$backup_suffix
 echo "[2] /etc/default/grub updated, backup saved as /etc/default/grub$backup_suffix"
 sudo grub-mkconfig --output=/boot/grub/grub.cfg # generate configuration file
