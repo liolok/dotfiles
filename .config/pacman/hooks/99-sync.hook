@@ -1,0 +1,12 @@
+# Force disks to sync to reduce the risk of data corruption
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+[Action]
+Description = Synchronize cached writes to persistent storage
+Depends = coreutils
+When = PostTransaction
+Exec = /usr/bin/sync
