@@ -18,6 +18,7 @@
 
 # my scripts
 !boot-params/
+!package-list/
 
 # other apps
 !autostart/
