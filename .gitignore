@@ -3,13 +3,10 @@
 # ignore-list files, at top level and under any tracked directories
 !.gitignore
 
-# pam_env
-!/.pam_environment
+# top level dirs
 !/.bin/
 !/.config/
 !/.data/
-
-# ssh
 !/.ssh/
 
 # my scripts
