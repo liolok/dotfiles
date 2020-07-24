@@ -1,5 +1,6 @@
 # ignore everything and use ! to allow tracking
 *
+
 # ignore-list files, at top level and under any tracked directories
 !.gitignore
 
@@ -8,26 +9,3 @@
 !/.config/
 !/.data/
 !/.ssh/
-
-# my scripts
-!boot-params/
-!package-list/
-
-# other apps
-!autostart/
-!Code/
-!Dharkael/
-!electron-netease-cloud-music/
-!fcitx5/
-!fontconfig/
-!fish/
-!git/
-!gtk-3.0/
-!gtk-4.0/
-!Kvantum/
-!nano/
-!neofetch/
-!pacman/
-!powerline/
-!python/
-!tmux/
