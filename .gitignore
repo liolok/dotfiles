@@ -3,10 +3,6 @@
 # ignore-list files, at top level and under any tracked directories
 !.gitignore
 
-# bash
-!/.bash_login
-!/.bashrc
-
 # pam_env
 !/.pam_environment
 !/.bin/
