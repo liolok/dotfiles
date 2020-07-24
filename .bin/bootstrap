@@ -1,5 +1,14 @@
 #!/bin/bash
 
-su --shell=/bin/bash --command='pacman -Syu --need - < ${XDG_CONFIG_HOME:=$HOME/.config}/dependency-lists/shell'
-chsh --shell /bin/fish
+echo "[1] Install packages for fish shell and nano editor."
+if [[ -d ${XDG_CONFIG_HOME:-~/.config}/package-list ]];
+then cd ${XDG_CONFIG_HOME:-~/.config}/package-list;
+else cd $(dirname $(realpath -s $0))/../.config/package-list;
+fi
+su --shell=/bin/bash --command=\
+"cat fish nano | pacman -Syu --needed --asexplicit -" || exit 1
+cd -
+
+echo "[2] Change login shell to fish and clean-up bash dotfiles."
+chsh --shell /usr/bin/fish || exit 2
 rm --verbose ~/.bash*
