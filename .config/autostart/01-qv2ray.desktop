@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=Qv2ray Delayed
-Exec=/bin/sh -c "sleep 1s; cgnoproxy qv2ray"
-Terminal=false
-Type=Application
-StartupNotify=false

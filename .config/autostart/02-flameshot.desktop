@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=Flameshot Delayed
-Exec=/bin/sh -c "sleep 2s; /usr/bin/flameshot"
-Terminal=false
-Type=Application
-StartupNotify=false
