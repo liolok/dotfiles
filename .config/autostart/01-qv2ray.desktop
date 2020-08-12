@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Qv2ray (Delayed 1s)
+Exec=bash -c "sleep 1s; qv2ray"
+Terminal=false
+Type=Application
+StartupNotify=false
