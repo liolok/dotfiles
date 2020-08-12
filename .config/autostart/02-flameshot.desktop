@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Flameshot (Delayed 2s)
+Exec=bash -c "sleep 2s; flameshot"
+Terminal=false
+Type=Application
+StartupNotify=false
