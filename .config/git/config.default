@@ -6,3 +6,9 @@
 	undo = reset HEAD^
 [core]
 	autocrlf = input
+[user]
+	name = liolok
+	email = github@liolok.com
+#	signingkey =
+# [commit]
+#	gpgsign = true
