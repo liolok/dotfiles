@@ -21,7 +21,6 @@
         "*rc": "shellscript",
         ".pam_environment": "properties"
     },
-    "files.autoGuessEncoding": true,
     "files.autoSave": "afterDelay",
     "files.eol": "\n",
     "files.insertFinalNewline": true,
