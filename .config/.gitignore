@@ -3,6 +3,7 @@
 !package-list/
 
 # other apps
+!autostart/
 !Code/
 !Dharkael/
 !electron-netease-cloud-music/
