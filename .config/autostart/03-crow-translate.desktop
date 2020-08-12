@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Crow Translate (Delayed 3s)
+Exec=bash -c "sleep 3s; crow"
+Terminal=false
+Type=Application
+StartupNotify=false
