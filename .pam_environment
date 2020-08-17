@@ -9,8 +9,8 @@
 # `session required pam_env.so` line and append option `user_readenv=1`.
 # To custom file path rather than default `~/.pam_environment`, append option
 # `user_envfile=path`, in which the path is relative to every user's home.
-# In my use case, the whole line should be like:
-# `session required pam_env.so user_readenv=1 user_envfile=.config/pam/pam_env.conf`
+# The whole line after modification may look like:
+# `session    required    pam_env.so user_readenv=1 user_envfile=.config/pam_env.conf`
 
 # Priority mechanism and syntax
 # VARIABLE [DEFAULT=[value]] [OVERRIDE=[value]]
@@ -29,7 +29,8 @@
 # Executable file search path list
 # (https://wiki.archlinux.org/index.php/Environment_variables#Examples)
 # Prepend user binary dir to `ENV_PATH` in `/etc/login.defs`
-PATH DEFAULT=@{HOME}/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin
+# PATH DEFAULT=@{HOME}/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin
+PATH DEFAULT=@{HOME}/.bin:${PATH}
 
 # Use nano as default text editor
 # (https://wiki.archlinux.org/index.php/Nano#Replacing_vi_with_nano)

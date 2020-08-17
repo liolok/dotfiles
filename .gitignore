@@ -9,3 +9,6 @@
 !/.config/
 !/.data/
 !/.ssh/
+
+# pam_env user config
+!/.pam_environment
