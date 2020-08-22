@@ -49,11 +49,13 @@ XDG_DATA_HOME   DEFAULT=@{HOME}/.data
 # (https://wiki.archlinux.org/index.php/XDG_Base_Directory)
 ADB_VENDOR_KEY          DEFAULT=${XDG_DATA_HOME}/adb
 ANDROID_SDK_HOME        DEFAULT=${XDG_DATA_HOME}/android-sdk
+CARGO_HOME              DEFAULT=${XDG_DATA_HOME}/cargo
 HISTFILE                DEFAULT=${XDG_DATA_HOME}/bash/history
 IPYTHONDIR              DEFAULT=${XDG_DATA_HOME}/ipython
 NPM_CONFIG_USERCONFIG   DEFAULT=${XDG_CONFIG_HOME}/npm/npmrc
 PYTHONSTARTUP           DEFAULT=${XDG_CONFIG_HOME}/python/startup.py
 PYLINTHOME              DEFAULT=${XDG_CACHE_HOME}/python-pylint
+RUSTUP_HOME             DEFAULT=${XDG_DATA_HOME}/rustup
 
 # Qt application theme under non-KDE
 # Plan A: Simply follow GTK2 through qt5-styleplugins
