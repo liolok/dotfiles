@@ -28,9 +28,11 @@
 
 # Executable file search path list
 # (https://wiki.archlinux.org/index.php/Environment_variables#Examples)
-# Prepend user binary dir to `ENV_PATH` in `/etc/login.defs`
-# PATH DEFAULT=@{HOME}/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin
-PATH DEFAULT=@{HOME}/.bin:${PATH}
+# Prepend user binary directory
+# This prepending method causes problem somehow
+# PATH DEFAULT=@{HOME}/.bin:${PATH}
+# Copied from `ENV_PATH` in `/etc/login.defs` of `core/shadow` package of Arch Linux
+PATH DEFAULT=@{HOME}/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin
 
 # Use nano as default text editor
 # (https://wiki.archlinux.org/index.php/Nano#Replacing_vi_with_nano)
