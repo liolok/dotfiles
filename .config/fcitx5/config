@@ -31,6 +31,9 @@ DeactivateKeys=
 [Hotkey/NextCandidate]
 0=Tab
 
+[Hotkey/TogglePreedit]
+0=Control+Alt+P
+
 [Behavior]
 # Active By Default
 ActiveByDefault=False
@@ -44,6 +47,7 @@ showInputMethodInformationWhenFocusIn=False
 DefaultPageSize=5
 # Force Enabled Addons
 EnabledAddons=
-# Force Disabled Addons
-DisabledAddons=
+
+[Behavior/DisabledAddons]
+0=table
 
