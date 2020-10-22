@@ -1,4 +1,4 @@
-function Syu --description "Upgrading the system and maybe install new packages"
+function roll --description "Upgrade the system and maybe install new packages"
     # (https://wiki.archlinux.org/index.php/Pacman#Upgrading_packages)
     sudo pacman -Syu
     if test -n "$argv"; sudo pacman -S --needed $argv; end
