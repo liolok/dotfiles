@@ -19,10 +19,6 @@ options+=(--user=$container_user --chdir=$container_home)
 options+=(--bind-ro=/usr/share/icons:$container_home/.local/share/icons
           --setenv=XCURSOR_PATH=$container_home/.local/share/icons) # fix cursor icon
 
-# Fonts
-options+=(--bind-ro=/usr/share/fonts:$container_home/.local/share/fonts
-          --bind-ro=$HOME/.config/fontconfig:$container_home/.config/fontconfig)
-
 # Vivado Projects
 options+=(--bind=/home/$USER/Vivado/:$container_home/Vivado)
 
