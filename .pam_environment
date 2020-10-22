@@ -47,8 +47,7 @@ XDG_DATA_HOME   DEFAULT=@{HOME}/.data
 
 # Workarounds for XDG base directory specification
 # (https://wiki.archlinux.org/index.php/XDG_Base_Directory)
-ADB_VENDOR_KEY          DEFAULT=${XDG_DATA_HOME}/adb
-ANDROID_SDK_HOME        DEFAULT=${XDG_DATA_HOME}/android-sdk
+ANDROID_SDK_ROOT        DEFAULT=${XDG_DATA_HOME}/android-sdk
 CARGO_HOME              DEFAULT=${XDG_DATA_HOME}/cargo
 HISTFILE                DEFAULT=${XDG_DATA_HOME}/bash/history
 IPYTHONDIR              DEFAULT=${XDG_DATA_HOME}/ipython
