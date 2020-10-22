@@ -47,6 +47,8 @@ showInputMethodInformationWhenFocusIn=False
 DefaultPageSize=5
 # Force Enabled Addons
 EnabledAddons=
+# Preload input method to be used by default
+PreloadInputMethod=True
 
 [Behavior/DisabledAddons]
 0=table

@@ -2,13 +2,13 @@
 # Group Name
 Name=Default
 # Layout
-Default Layout=us
+Default Layout=cn
 # Default Input Method
 DefaultIM=shuangpin
 
 [Groups/0/Items/0]
 # Name
-Name=keyboard-us
+Name=keyboard-cn
 # Layout
 Layout=
 
