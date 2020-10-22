@@ -50,7 +50,9 @@ options+=(--bind-ro=/tmp/.X11-unix/ --setenv=DISPLAY=$DISPLAY)
 options+=(--bind=/dev/dri/ --bind=/dev/input/)
 
 # Scale
-options+=(--setenv=GDK_SCALE=2 --setenv=GDK_DPI_SCALE=0.5)
+if [[ $HOSTNAME == acer-sf ]]; then
+    options+=(--setenv=GDK_SCALE=2 --setenv=GDK_DPI_SCALE=0.5)
+fi
 
 echo "List of cmdline options applied to systemd-nspawn:"
 printf "%s\n" "${options[@]}" | sort
