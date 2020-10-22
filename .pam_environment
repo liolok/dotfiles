@@ -51,6 +51,7 @@ ANDROID_SDK_ROOT        DEFAULT=${XDG_DATA_HOME}/android-sdk
 CARGO_HOME              DEFAULT=${XDG_DATA_HOME}/cargo
 HISTFILE                DEFAULT=${XDG_DATA_HOME}/bash/history
 IPYTHONDIR              DEFAULT=${XDG_DATA_HOME}/ipython
+LESSHISTFILE            DEFAULT=${XDG_DATA_HOME}/less/history
 NPM_CONFIG_USERCONFIG   DEFAULT=${XDG_CONFIG_HOME}/npm/npmrc
 PYTHONSTARTUP           DEFAULT=${XDG_CONFIG_HOME}/python/startup.py
 PYLINTHOME              DEFAULT=${XDG_CACHE_HOME}/python-pylint
