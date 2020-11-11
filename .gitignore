@@ -5,7 +5,6 @@
 !.gitignore
 
 # top level dirs
-!/.bin/
 !/.config/
 !/.local/
 !/.ssh/
