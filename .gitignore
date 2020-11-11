@@ -7,7 +7,7 @@
 # top level dirs
 !/.bin/
 !/.config/
-!/.data/
+!/.local/
 !/.ssh/
 
 # pam_env user config

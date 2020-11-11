@@ -39,11 +39,11 @@ PATH DEFAULT=@{HOME}/.bin:/usr/local/sbin:/usr/local/bin:/usr/bin
 EDITOR DEFAULT=nano
 VISUAL DEFAULT=nano
 
-# XDG base directory specification, modified with a simple data directory.
+# XDG base directory specification
 # (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
 XDG_CACHE_HOME  DEFAULT=@{HOME}/.cache
 XDG_CONFIG_HOME DEFAULT=@{HOME}/.config
-XDG_DATA_HOME   DEFAULT=@{HOME}/.data
+XDG_DATA_HOME   DEFAULT=@{HOME}/.local/share
 
 # Workarounds for XDG base directory specification
 # (https://wiki.archlinux.org/index.php/XDG_Base_Directory)
