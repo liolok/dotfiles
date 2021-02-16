@@ -13,9 +13,9 @@ string match --quiet '*pts*' (tty) && powerline-setup
 # (https://github.com/fish-shell/fish-shell/issues/709#issuecomment-261745982)
 abbr --add - 'cd -'
 abbr --add fh 'free --human'
-abbr --add neo 'neofetch'
+abbr --add nf 'neofetch'
 abbr --add pm 'sudo pacman'
-abbr --add sys 'sudo systemctl'
+abbr --add sc 'sudo systemctl'
 
 # Aliases
 # (https://fishshell.com/docs/current/cmds/alias.html)
