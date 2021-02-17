@@ -57,6 +57,7 @@ NPM_CONFIG_USERCONFIG   DEFAULT=${XDG_CONFIG_HOME}/npm/npmrc
 PYTHONSTARTUP           DEFAULT=${XDG_CONFIG_HOME}/python/startup.py
 PYLINTHOME              DEFAULT=${XDG_CACHE_HOME}/python-pylint
 RUSTUP_HOME             DEFAULT=${XDG_DATA_HOME}/rustup
+WGETRC                  DEFAULT=${XDG_CONFIG_HOME}/wgetrc
 
 # Qt application theme under non-KDE
 # Plan A: Simply follow GTK2 through qt5-styleplugins
