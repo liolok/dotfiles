@@ -1,2 +1,3 @@
 !*.fish
+!conf.d/
 !functions/
