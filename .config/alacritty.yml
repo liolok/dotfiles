@@ -102,7 +102,7 @@
   #multiplier: 3
 
 # Font configuration
-#font:
+font:
   # Normal (roman) font face
   #normal:
     # Font family
@@ -150,7 +150,7 @@
     #style: Bold Italic
 
   # Point size
-  #size: 11.0
+  size: 10.0 # default 11.0 seems a little fat
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -162,9 +162,9 @@
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
   # right, increasing `y` moves the glyph upward.
-  #glyph_offset:
-  #  x: 0
-  #  y: 0
+  glyph_offset:
+    x: 0
+    y: -1 # fix for my powerline prompt
 
   # Thin stroke font rendering (macOS only)
   #
@@ -176,10 +176,10 @@
 #draw_bold_text_with_bright_colors: false
 
 # Colors (Tomorrow Night)
-#colors:
+colors:
   # Default colors
-  #primary:
-  #  background: '#1d1f21'
+  primary:
+    background: '#2F343F' # same color as title bar of arc dark theme
   #  foreground: '#c5c8c6'
 
     # Bright and dim foreground colors
