@@ -1,8 +1,9 @@
 #!/bin/fish
 
 # User function backup
-functions --query fallback || alias fallback \
-"begin; for v in $argv; if test -n $v; echo $v; break; end; end; end; end"
+functions --query fallback || function fallback --argument-names list \
+--description "Fallback to first non-zero string in given list"
+begin; for v in $list; if test -n $v; echo $v; break; end; end; end; end
 
 # Launch app from systemd-nspawn container
 set container_dir /var/lib/machines
