@@ -3,6 +3,7 @@
 !package-list/
 
 # other apps
+!alacritty.yml
 !autostart/
 !Code/
 !Dharkael/
