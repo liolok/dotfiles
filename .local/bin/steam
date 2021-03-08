@@ -1,46 +1,47 @@
 #!/bin/fish
 
 # User function backup
-functions --query fallback || function fallback --argument-names list \
---description "Fallback to first non-zero string in given list"
-begin; for v in $list; if test -n $v; echo $v; break; end; end; end; end
+functions --query fallback; or function fallback --argument-names "list" \
+    --description "Fallback to first non-zero string in given list"
+    begin; for v in $list; if test -n $v; echo $v; break; end; end; end; end
 
 # Launch app from systemd-nspawn container
-set container_dir /var/lib/machines
-set container_app (basename (status filename)) # get from current file base name
-set app $container_app
+set file_name (basename (status filename)) # get current file base name
+set app $file_name
 set home /home/$app # dedicated home for app in container
-set home_conf $home/.config
-set home_data $home/.local/share
+set host_conf (fallback $XDG_CONFIG_HOME ~/.config)
+set conf $home/.config
+set host_data /usr/share
+set data $home/.local/share
 
 # Commandline options for systemd-nspawn
-set options --as-pid2 --directory=$container_dir/$app --user=$app --chdir=$home
+set options --as-pid2 --directory=/var/lib/machines/$app --user=$app --chdir=$home
 alias add_options 'set --append options'
 
 # Tray
-set host_bus (fallback (string trim --left --chars=unix:path= $DBUS_SESSION_BUS_ADDRESS) \
+set host_dbus (fallback \
+    (string trim --left --chars=unix:path= $DBUS_SESSION_BUS_ADDRESS) \
     /run/user/(id --user)/bus)
-set container_bus /run/user/host/bus
-add_options --bind-ro=$host_bus:$container_bus \
-            --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=$container_bus
+set dbus /run/user/host/bus
+add_options --bind-ro=$host_dbus:$dbus \
+            --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=$dbus
 
 # Sound
-set host_pulse (fallback (string trim --left --chars=unix: $PULSE_SERVER) \
+set host_pulse (fallback \
+    (string trim --left --chars=unix: $PULSE_SERVER) \
     /run/user/(id --user)/pulse/native)
-set container_pulse /run/user/host/pulse
-add_options --bind-ro=$host_pulse:$container_pulse \
-            --setenv=PULSE_SERVER=unix:$container_pulse
+set pulse /run/user/host/pulse
+add_options --bind-ro=$host_pulse:$pulse \
+            --setenv=PULSE_SERVER=unix:$pulse
 
 # Icons
-set container_icons $home_data/icons
-add_options --bind-ro=/usr/share/icons:$container_icons \
-            --setenv=XCURSOR_PATH=$container_icons
+set icons $data/icons
+add_options --bind-ro=$host_data/icons:$icons \
+    --setenv=XCURSOR_PATH=$icons
 
 # Fonts
-set host_fontconf (fallback $XDG_CONFIG_HOME ~/.config)/fontconfig
-set container_fonts $home_data/fonts
-add_options --bind-ro=/usr/share/fonts:$container_fonts \
-            --bind-ro=$host_fontconf:$home_conf/fontconfig
+add_options --bind-ro=$host_data/fonts:$data/fonts \
+            --bind-ro=$host_conf/fontconfig:$conf/fontconfig
 
 # Screenshots
 set host_screenshots (fallback (xdg-user-dir PICTURES) ~/Pictures)/Screenshots/$app
@@ -48,7 +49,8 @@ mkdir --parents $host_screenshots
 add_options --bind=$host_screenshots:$home/screenshots
 
 # Authorization for X, seems not necessary under Gnome.
-# set xauth_file /tmp/xauth-$container_name
+# (https://wiki.archlinux.org/index.php/Systemd-nspawn#Avoiding_xhost)
+# set xauth_file /tmp/xauth-$app
 # xauth nextract - "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$xauth_file" nmerge -
 # add_options --bind=$xauth_file --setenv=XAUTHORITY=$xauth_file
 
@@ -67,5 +69,5 @@ end
 echo "List of cmdline options applied to systemd-nspawn:"
 printf "%s\n" $options | sort
 
-# Run container directly into target application
+# Run container directly into target app, passthrough all arguments.
 sudo systemd-nspawn $options $app $argv
