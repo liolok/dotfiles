@@ -15,7 +15,7 @@ set host_data /usr/share
 set data $home/.local/share
 
 # Commandline options for systemd-nspawn
-set options --as-pid2 --directory=/var/lib/machines/$app --user=$app --chdir=$home
+set options --as-pid2 --machine=$app --user=$app --chdir=$home
 alias add_options 'set --append options'
 
 # Tray
