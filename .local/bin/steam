@@ -58,8 +58,9 @@ add_options --bind=$host_screenshots:$home/screenshots
 add_options --bind-ro=/tmp/.X11-unix/ --setenv=DISPLAY=$DISPLAY
 
 # Devices
-add_options --bind=/dev/dri/ --property=DeviceAllow=char-drm\ rwm \
-            --bind=/dev/input/ --property=DeviceAllow=char-input\ rwm
+# (https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html#DeviceAllow=)
+add_options --bind=/dev/dri/ --property=DeviceAllow='char-drm rw' \
+            --bind=/dev/input/ --property=DeviceAllow='char-input r'
 
 # Scale
 if test $hostname = acer-sf
