@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "[1] Install packages for fish shell and nano editor."
-pacman -Syu --needed --asexplicit < \
-${XDG_CONFIG_HOME:-~/.config}/package-list/{fish,nano} || exit 1
+cat ${XDG_CONFIG_HOME:-~/.config}/package-list/{fish,nano} \
+| pacman -Syu - --needed --asexplicit || exit 1
 
 echo "[2] Change login shell to fish and clean-up bash dotfiles."
 chsh --shell /usr/bin/fish || exit 2
