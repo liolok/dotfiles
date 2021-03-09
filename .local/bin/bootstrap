@@ -1,23 +1,10 @@
 #!/bin/bash
 
 echo "[1] Install packages for fish shell and nano editor."
-if [[ -d ${XDG_CONFIG_HOME:-~/.config}/package-list ]];
-then cd ${XDG_CONFIG_HOME:-~/.config}/package-list;
-else cd $(dirname $(realpath -s $0))/../.config/package-list;
-fi
-su --shell=/bin/bash --command=\
-"cat fish nano | pacman -Syu --needed --asexplicit -" || exit 1
-cd -
+pacman -Syu --needed --asexplicit < \
+${XDG_CONFIG_HOME:-~/.config}/package-list/{fish,nano} || exit 1
 
 echo "[2] Change login shell to fish and clean-up bash dotfiles."
 chsh --shell /usr/bin/fish || exit 2
-rm --verbose ~/.bash*
-
-echo "[3] Configure PAM to read user level pam_env config file."
-old="pam_env.so$"
-new="pam_env.so user_readenv=1 user_envfile=.config\/pam\/pam_env.conf"
-pam=/etc/pam.d/system-login
-backup_suffix=".$(date +%F.%T)"
-su --shell=/bin/bash --command=\
-"sed \"s/$old/$new/g\" $pam --in-place=$backup_suffix" || exit 3
-echo "[3] $pam updated, backup saved as $pam$backup_suffix"
+rm --force --verbose ~/.bash*
+export HISTFILE=${XDG_DATA_HOME:-~/.local/share}/bash/history
