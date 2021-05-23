@@ -1,10 +1,5 @@
 #!/bin/fish
 
-# User function backup
-functions --query fallback; or function fallback --argument-names "list" \
-    --description "Fallback to first non-zero string in given list"
-    begin; for v in $list; if test -n $v; echo $v; break; end; end; end; end
-
 # Launch app from systemd-nspawn container
 set file_name (basename (status filename)) # get current file base name
 set app $file_name
@@ -19,53 +14,46 @@ set options --as-pid2 --machine=$app --user=$app --chdir=$home
 alias add_options 'set --append options'
 
 # Tray
-set host_dbus (fallback \
-    (string trim --left --chars=unix:path= $DBUS_SESSION_BUS_ADDRESS) \
-    /run/user/(id --user)/bus)
+set host_dbus (string trim --left --chars=unix:path= $DBUS_SESSION_BUS_ADDRESS)
+test -n $host_dbus; or set host_dbus /run/user/(id --user)/bus
 set dbus /run/user/host/bus
-add_options --bind-ro=$host_dbus:$dbus \
-            --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=$dbus
+add_options --bind-ro=$host_dbus:$dbus --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=$dbus
 
 # Sound
-set host_pulse (fallback \
-    (string trim --left --chars=unix: $PULSE_SERVER) \
-    /run/user/(id --user)/pulse/native)
+set host_pulse (string trim --left --chars=unix: $PULSE_SERVER)
+test -n $host_pulse; or set host_pulse /run/user/(id --user)/pulse/native
 set pulse /run/user/host/pulse
-add_options --bind-ro=$host_pulse:$pulse \
-            --setenv=PULSE_SERVER=unix:$pulse
+add_options --bind-ro=$host_pulse:$pulse --setenv=PULSE_SERVER=unix:$pulse
 
 # Icons
-set icons $data/icons
-add_options --bind-ro=$host_data/icons:$icons \
-    --setenv=XCURSOR_PATH=$icons
+add_options --bind-ro=$host_data/icons:$data/icons --setenv=XCURSOR_PATH=$data/icons
 
 # Fonts
-add_options --bind-ro=$host_data/fonts:$data/fonts \
-            --bind-ro=$host_conf/fontconfig:$conf/fontconfig
+add_options --bind-ro=$host_data/fonts:$data/fonts --bind-ro=$host_conf/fontconfig:$conf/fontconfig
 
 # Screenshots
-set host_screenshots (fallback (xdg-user-dir PICTURES) ~/Pictures)/Screenshots/$app
+set host_pictures (xdg-user-dir PICTURES)
+test -n $host_pictures; or set host_pictures ~/Pictures
+set host_screenshots $host_pictures/Screenshots/Steam
 mkdir --parents $host_screenshots
 add_options --bind=$host_screenshots:$home/screenshots
 
-# Authorization for X, seems not necessary under Gnome.
-# (https://wiki.archlinux.org/index.php/Systemd-nspawn#Avoiding_xhost)
-# set xauth_file /tmp/xauth-$app
-# xauth nextract - "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$xauth_file" nmerge -
-# add_options --bind=$xauth_file --setenv=XAUTHORITY=$xauth_file
-
 # Display
+# (https://wiki.archlinux.org/title/Systemd-nspawn#Use_an_X_environment)
 add_options --bind-ro=/tmp/.X11-unix/ --setenv=DISPLAY=$DISPLAY
+# (https://wiki.archlinux.org/title/Systemd-nspawn#Avoiding_xhost)
+set xauth_file /tmp/xauth-$app
+touch $xauth_file
+xauth nextract - "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$xauth_file" nmerge -
+add_options --bind=$xauth_file --setenv=XAUTHORITY=$xauth_file
 
 # Devices
 # (https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html#DeviceAllow=)
-add_options --bind=/dev/dri/ --property=DeviceAllow='char-drm rw' \
-            --bind=/dev/input/ --property=DeviceAllow='char-input r'
+add_options --bind=/dev/dri/ --property=DeviceAllow='char-drm rw' # Graphic cards
+add_options --bind=/dev/input/ --property=DeviceAllow='char-input r' # Joysticks
 
 # Scale
-if test $hostname = acer-sf
-    add_options --setenv=GDK_SCALE=2 --setenv=GDK_DPI_SCALE=0.5
-end
+test $hostname = acer-sf; and add_options --setenv=GDK_SCALE=2 --setenv=GDK_DPI_SCALE=0.5
 
 echo "List of cmdline options applied to systemd-nspawn:"
 printf "%s\n" $options | sort
