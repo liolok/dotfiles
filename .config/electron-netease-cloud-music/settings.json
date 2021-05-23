@@ -1,16 +1,18 @@
 {
     "autoPlay": false,
-    "autoReplacePlaylist": true,
     "autoSign": true,
-    "bitRate": "h",
-    "exitOnWindowClose": false,
+    "bitRate": "ex",
+    "bitRateDownload": "ex",
     "filterRcmd": true,
-    "showTrayIcon": false,
     "startupPage": "favorite",
-    "themePrimaryColor": "#303440",
+    "windowBorder": true,
+    "windowZoom": null,
+    "showTrayIcon": false,
+    "trayIconVariety": "light",
+    "exitOnWindowClose": false,
+    "minimizeOnStartup": false,
+    "themePrimaryColor": "#2e3440",
     "themeSecondaryColor": "#d50000",
     "themeVariety": "light",
-    "trayIconVariety": "light",
-    "windowBorder": true,
-    "windowZoom": null
+    "autoReplacePlaylist": true
 }
