@@ -49,7 +49,7 @@
     "update.showReleaseNotes": false,
     "window.openFilesInNewWindow": "on",
     "workbench.activityBar.visible": true,
-    "workbench.colorTheme": "Arc Dark Theme",
+    "workbench.colorTheme": "Nord",
     "workbench.enableExperiments": false,
     "workbench.settings.useSplitJSON": true,
     "workbench.sideBar.location": "right",
