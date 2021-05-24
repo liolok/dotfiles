@@ -15,13 +15,13 @@ alias add_options 'set --append options'
 
 # Tray
 set host_dbus (string trim --left --chars=unix:path= $DBUS_SESSION_BUS_ADDRESS)
-test -n $host_dbus; or set host_dbus /run/user/(id --user)/bus
+test -n "$host_dbus"; or set host_dbus /run/user/(id --user)/bus
 set dbus /run/user/host/bus
 add_options --bind-ro=$host_dbus:$dbus --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=$dbus
 
 # Sound
 set host_pulse (string trim --left --chars=unix: $PULSE_SERVER)
-test -n $host_pulse; or set host_pulse /run/user/(id --user)/pulse/native
+test -n "$host_pulse"; or set host_pulse /run/user/(id --user)/pulse/native
 set pulse /run/user/host/pulse
 add_options --bind-ro=$host_pulse:$pulse --setenv=PULSE_SERVER=unix:$pulse
 
@@ -33,7 +33,7 @@ add_options --bind-ro=$host_data/fonts:$data/fonts --bind-ro=$host_conf/fontconf
 
 # Screenshots
 set host_pictures (xdg-user-dir PICTURES)
-test -n $host_pictures; or set host_pictures ~/Pictures
+test -n "$host_pictures"; or set host_pictures ~/Pictures
 set host_screenshots $host_pictures/Screenshots/Steam
 mkdir --parents $host_screenshots
 add_options --bind=$host_screenshots:$home/screenshots
