@@ -1,0 +1,3 @@
+#!/bin/fish
+
+fakehome /usr/bin/code $argv
