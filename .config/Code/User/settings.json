@@ -12,14 +12,11 @@
     ],
     "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?，。？；：‘“”、（）！…—",
     "files.associations": {
-        "**/Kvantum/*.kvconfig": "properties",
         "**/fcitx5/config": "properties",
         "**/fcitx5/profile": "properties",
         "**/fontconfig/**/*.conf": "xml",
         "*.desktop": "properties",
-        "*.json": "jsonc",
-        "*rc": "shellscript",
-        ".pam_environment": "properties"
+        "*.json": "jsonc"
     },
     "files.autoSave": "afterDelay",
     "files.eol": "\n",
@@ -29,18 +26,10 @@
     "files.trimTrailingWhitespace": true,
     "git.autofetch": true,
     "git.enableCommitSigning": true,
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.codeLens.enabled": false,
     "gitlens.showWhatsNewAfterUpgrades": false,
     "html.format.endWithNewline": true,
-    "spellright.configurationScope": "user",
-    "spellright.documentTypes": [
-        "markdown",
-        "latex",
-        "plaintext"
-    ],
-    "spellright.language": [
-        "en_US"
-    ],
-    "spellright.notificationClass": "information",
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
     "terminal.integrated.experimentalUseTitleEvent": true,
