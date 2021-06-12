@@ -1,0 +1,27 @@
+#!/bin/fish
+# Use dedicated fake $HOME to run app
+# Dependency: [which]
+
+# Real home directory
+# (https://man.archlinux.org/man/getent.1)
+# (https://man.archlinux.org/man/passwd.5.en)
+set real_home (string split : (getent passwd (whoami)) --fields 6)
+
+# Self symbolic link detection
+set file_name (basename (status current-filename))
+if test $file_name = 'fakehome'
+    set app_name $argv[1]
+    set --erase argv[1]
+    test -n "$app_name"; or echo "At least one argument needed" && exit 1
+else
+    set app_name $file_name
+end
+
+# App binary location
+# (https://man.archlinux.org/man/core/which/which.1.en)
+set app_bin (HOME=$real_home which --skip-tilde $app_name)
+test -n "$app_bin"; or echo "App not found" && exit 2
+
+set fake_home (fallback $XDG_DATA_HOME $real_home/.local/share)/$app_name
+mkdir --parents $fake_home
+HOME=$fake_home $app_bin $argv # passthrough all arguments
