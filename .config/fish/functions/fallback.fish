@@ -2,7 +2,7 @@
 function fallback --argument-names "list" \
 --description "Fallback to first non-zero string in given list"
     for value in $list
-        if test -n $value # non-zero string
+        if test -n "$value" # non-zero string
             echo $value # output
             break
         end
