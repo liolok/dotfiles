@@ -3,9 +3,7 @@
 !package-list/
 
 # other apps
-!alacritty.yml
 !Code/
-!Dharkael/
 !electron-netease-cloud-music/
 !fcitx5/
 !fontconfig/
