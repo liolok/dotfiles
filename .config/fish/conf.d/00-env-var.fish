@@ -33,7 +33,7 @@ x NPM_CONFIG_USERCONFIG $XDG_CONFIG_HOME/npm/npmrc
 x PYTHONSTARTUP         $XDG_CONFIG_HOME/python/startup.py
 x PYLINTHOME            $XDG_CACHE_HOME/python-pylint
 x RUSTUP_HOME           $XDG_DATA_HOME/rustup
-x WGETRC                $XDG_CONFIG_HOME/wgetrc
+x WGETRC                $XDG_CONFIG_HOME/wget/config.ini
 
 # Use nano as default text editor
 # (https://wiki.archlinux.org/title/Nano#Replacing_vi_with_nano)
