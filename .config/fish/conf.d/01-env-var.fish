@@ -1,6 +1,7 @@
-# ~/.config/fish/conf.d/00-env-var.fish
+# ~/.config/fish/conf.d/01-env-var.fish
+# (https://fishshell.com/docs/current/#exporting-variables)
 
-# Export environment varaiables only when login
+# Export environment variables only when login
 # (https://fishshell.com/docs/current/cmds/status.html?highlight=is-login)
 status is-login; or exit
 
@@ -8,10 +9,6 @@ status is-login; or exit
 # (https://fishshell.com/docs/current/cmds/fish_add_path.html)
 # (https://www.freedesktop.org/software/systemd/man/file-hierarchy.html#~/.local/bin/)
 fish_add_path $HOME/.local/bin
-
-# Temporary alias for quick export
-# (https://fishshell.com/docs/current/#exporting-variables)
-alias x 'set --global --export'
 
 # XDG base directory
 # (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables)
@@ -34,6 +31,7 @@ x PYTHONSTARTUP         $XDG_CONFIG_HOME/python/startup.py
 x PYLINTHOME            $XDG_CACHE_HOME/python-pylint
 x RUSTUP_HOME           $XDG_DATA_HOME/rustup
 x WGETRC                $XDG_CONFIG_HOME/wget/config.ini
+x XAUTHORITY            $XDG_RUNTIME_DIR/Xauthority
 
 # Use nano as default text editor
 # (https://wiki.archlinux.org/title/Nano#Replacing_vi_with_nano)
@@ -46,17 +44,11 @@ x GTK_IM_MODULE fcitx
 x QT_IM_MODULE  fcitx
 x XMODIFIERS    @im=fcitx
 
-# KDE
 # (https://wiki.archlinux.org/title/KDE#From_the_console)
 x DESKTOP_SESSION plasma
-x XAUTHORITY $XDG_RUNTIME_DIR/Xauthority
 
-# GPG
 # (https://wiki.archlinux.org/title/GnuPG#Configure_pinentry_to_use_the_correct_TTY)
 x GPG_TTY (tty)
 
 # (https://wiki.archlinux.org/title/Uniform_look_for_Qt_and_GTK_applications#Consistent_file_dialog)
 x GTK_USE_PORTAL 1
-
-# Erase temporary alias
-functions --erase x

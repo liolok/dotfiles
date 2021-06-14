@@ -1,3 +1,4 @@
+# ~/.config/fish/conf.d/50-powerline.fish
 # (https://powerline.readthedocs.io/en/latest/usage/shell-prompts.html#fish-prompt)
 
 
