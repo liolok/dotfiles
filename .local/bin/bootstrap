@@ -1,8 +1,27 @@
-#!/bin/bash
+#!/bin/fish
 
-echo "[1] Install packages for fish shell and nano editor."
-cat ${XDG_CONFIG_HOME:-~/.config}/package-list/{fish,nano} \
-| pacman -Syu - --needed --asexplicit || exit 1
+echo "[1] Install packages for fish shell and nano editor"
+cat (fallback $XDG_CONFIG_HOME ~/.config)/package-list/{fish, nano} \
+| pacman --sync --refresh --sysupgrade --needed --asexplicit -
 
-echo "[2] Change login shell to fish."
-chsh --shell /usr/bin/fish || exit 2
+echo "[2] Cleanup bash dotfiles to user cache directoy"
+set bash_files ~/.bash*
+test -n "$bash_files"; and mv --verbose $bash_files (fallback $XDG_CACHE_HOME ~/.cache)
+
+# (https://wiki.archlinux.org/title/OpenSSH#Force_public_key_authentication)
+echo "[3] Turn off SSHD password authentication if user public key file exists"
+if test -s ~/.ssh/authorized_keys # exists and size greater than zero
+    set --local conf /etc/ssh/sshd_config
+    set --local key PasswordAuthentication
+    if grep --quiet "^$key no" $conf
+        echo "Password authentication already turned off"
+    else
+        cp --verbose $conf{, .backup}
+        if grep --quiet "^#$key" $conf
+            sed --in-place "s/^#$key.*\$/$key no/" $conf
+        else
+            echo "$key no" | tee --append $conf
+        end
+        diff --color $conf{.backup,}
+    end
+end
