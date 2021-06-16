@@ -2,7 +2,7 @@
 
 echo "[1] Install packages for fish shell and nano editor"
 cat (fallback $XDG_CONFIG_HOME ~/.config)/package-list/{fish, nano} \
-| pacman --sync --refresh --sysupgrade --needed --asexplicit -
+    | pacman --sync --refresh --sysupgrade --needed --asexplicit -
 
 echo "[2] Cleanup bash dotfiles to user cache directoy"
 set bash_files ~/.bash*
@@ -13,7 +13,7 @@ echo "[3] Turn off SSHD password authentication if user public key file exists"
 if test -s ~/.ssh/authorized_keys # exists and size greater than zero
     set --local conf /etc/ssh/sshd_config
     set --local key PasswordAuthentication
-    if grep --quiet "^$key no" $conf
+    if grep --quiet "^$key no\$" $conf
         echo "Password authentication already turned off"
     else
         cp --verbose $conf{, .backup}
@@ -21,6 +21,30 @@ if test -s ~/.ssh/authorized_keys # exists and size greater than zero
             sed --in-place "s/^#$key.*\$/$key no/" $conf
         else
             echo "$key no" | tee --append $conf
+        end
+        diff --color $conf{.backup,}
+    end
+end
+
+echo "[4] Turn on Pacman color and comparing versions options"
+set pm_conf /etc/pacman.conf
+if test -s $pm_conf # exists and size greater than zero
+    set --local conf $pm_conf
+    set --local keys Color VerbosePkgLists
+    for key in $keys
+        if grep --quiet "^$key\$" $conf
+            echo "Option `$key` already turned on"
+            set --erase keys[(contains --index $key $keys)] # delete key
+        end
+    end
+    if test (count $keys) -gt 0
+        cp --verbose $conf{, .backup}
+        for key in $keys
+            if grep --quiet "^#$key\$" $conf
+                sed --in-place "s/^#$key\$/$key/" $conf
+            else
+                echo "$key" | tee --append $conf
+            end
         end
         diff --color $conf{.backup,}
     end
