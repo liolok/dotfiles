@@ -1,0 +1,36 @@
+#!/bin/fish
+# Mess around with simple INI-like configuration files
+
+argparse --ignore-unknown 'file=' 'backup=?' -- $argv
+
+set --query _flag_file; or echo 'Missing `--file=FILE` argument' && exit 1
+set file $_flag_file
+
+if test -s "$file" # file already exists and has content
+    for arg in $argv
+        if grep --line-number "^$arg" $file
+            echo "Configuration `$arg` already exists"
+            set --erase argv[(contains --index "$arg" $argv)] # delete item
+        end
+    end
+    test -n "$argv"; or echo "Nothing to configure, no changes to `$file` at all" && exit
+
+    set backup $_flag_backup
+    set suffix (string sub --length 7 (sha256sum $file))
+    test -n "$backup"; or set backup $file.$suffix
+    cp --archive --verbose $file $backup; or set --erase backup
+end
+
+touch $file; or echo "Cannot create `$file`" && exit 2
+test -w "$file"; or echo "Cannot write `$file`" && exit 3
+
+for arg in $argv
+    set --local key (string split ' ' $arg --fields 1)
+    if grep --quiet "^#$key" $file
+        sed --in-place "s/^#$key.*\$/$arg/" $file
+    else
+        echo $arg | tee --append $file
+    end
+end
+
+test -f "$backup"; and diff --color $backup $file
