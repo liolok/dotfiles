@@ -1,6 +1,12 @@
 # ~/.config/fish/conf.d/01-env-var.fish
 # (https://fishshell.com/docs/current/#exporting-variables)
 
+# Real home directory
+# (https://man.archlinux.org/man/getent.1)
+# (https://man.archlinux.org/man/passwd.5.en)
+x HOME_REAL (string split : (getent passwd (whoami)) --fields 6)
+test $HOME = $HOME_REAL; or x HOME $HOME_REAL
+
 # Export environment variables only when login
 # (https://fishshell.com/docs/current/cmds/status.html?highlight=is-login)
 status is-login; or exit
