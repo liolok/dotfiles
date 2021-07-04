@@ -30,6 +30,7 @@ x GNUPGHOME             $XDG_DATA_HOME/gnupg
 x GTK2_RC_FILES         $XDG_CONFIG_HOME/gtk-2.0/gtkrc
 x HISTFILE              $XDG_DATA_HOME/bash/history
 x IPYTHONDIR            $XDG_DATA_HOME/ipython
+x JUPYTER_CONFIG_DIR    $XDG_CONFIG_HOME/jupyter
 x KDEHOME               $XDG_DATA_HOME/kde
 x LESSHISTFILE          $XDG_DATA_HOME/less/history
 x NPM_CONFIG_USERCONFIG $XDG_CONFIG_HOME/npm/npmrc
