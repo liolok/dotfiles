@@ -1,0 +1,47 @@
+#!/bin/fish
+
+# Launch app from systemd-nspawn container
+set file_name (basename (status filename)) # get current file base name
+set app $file_name
+set user android
+set home /home/$user # dedicated home for app in container
+set start_script $home/studio/bin/studio.sh
+set host_conf $XDG_CONFIG_HOME; test -n "$host_conf"; or set host_conf ~/.config
+set conf $home/.config
+set host_data /usr/share
+set data $home/.local/share
+
+# Command line options for systemd-nspawn
+set options --as-pid2 --machine=$app --user=$user --chdir=$home
+alias add_options 'set --append options'
+
+# Icons
+add_options --bind-ro=$host_data/icons:$data/icons \
+            --setenv=XCURSOR_PATH=$data/icons
+
+# Fonts
+add_options --bind-ro=$host_data/fonts:$data/fonts \
+            --bind-ro=$host_conf/fontconfig:$conf/fontconfig
+
+# Display
+# (https://wiki.archlinux.org/title/Systemd-nspawn#Use_an_X_environment)
+add_options --bind-ro=/tmp/.X11-unix/ --setenv=DISPLAY=$DISPLAY
+# (https://wiki.archlinux.org/title/Systemd-nspawn#Avoiding_xhost)
+set xauth_file /tmp/xauth-$app
+touch $xauth_file
+xauth nextract - "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$xauth_file" nmerge -
+add_options --bind=$xauth_file --setenv=XAUTHORITY=$xauth_file
+
+# Projects
+set host_projects ~/$app
+mkdir --parents $host_projects
+add_options --bind=$host_projects/:$home/projects
+
+# DNS
+add_options --bind-ro=/etc/resolv.conf
+
+echo "List of cmdline options applied to systemd-nspawn:"
+printf "%s\n" $options | sort
+
+# Run container directly into target app, passthrough all arguments.
+sudo cgproxy systemd-nspawn $options $start_script $argv
