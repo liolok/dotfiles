@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Android Studio
+Comment=The official Android IDE
+Exec=android-studio
+Icon=android-studio
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true
+StartupWMClass=jetbrains-studio
