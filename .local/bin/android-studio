@@ -44,4 +44,4 @@ echo "List of cmdline options applied to systemd-nspawn:"
 printf "%s\n" $options | sort
 
 # Run container directly into target app, passthrough all arguments.
-sudo cgproxy systemd-nspawn $options $start_script $argv
+sudo systemd-nspawn $options $start_script $argv
