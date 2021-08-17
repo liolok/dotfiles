@@ -18,5 +18,6 @@
 !pacman/
 !powerline/
 !python/
+!starship.toml
 !tmux/
 !wget/
