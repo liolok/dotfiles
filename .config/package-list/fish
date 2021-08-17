@@ -1,7 +1,6 @@
 fish
-powerline
+starship
 which
-powerline-fonts
 neofetch
 exa
 curl
