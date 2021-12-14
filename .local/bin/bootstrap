@@ -2,50 +2,30 @@
 
 echo "[1] Install packages for fish shell and nano editor"
 cat (fallback $XDG_CONFIG_HOME ~/.config)/package-list/{fish, nano} \
-    | pacman --sync --refresh --sysupgrade --needed --asexplicit -
+    | sudo pacman --sync --refresh --sysupgrade --needed --asexplicit -
 
-echo "[2] Cleanup bash dotfiles to user cache directoy"
+echo "[2] Cleanup bash dotfiles to user cache directory"
 set bash_files ~/.bash*
 test -n "$bash_files"; and mv --verbose $bash_files (fallback $XDG_CACHE_HOME ~/.cache)
 
 # (https://wiki.archlinux.org/title/OpenSSH#Force_public_key_authentication)
 echo "[3] Turn off SSHD password authentication if user public key file exists"
 if test -s ~/.ssh/authorized_keys # exists and size greater than zero
-    set --local conf /etc/ssh/sshd_config
-    set --local key PasswordAuthentication
-    if grep --quiet "^$key no\$" $conf
-        echo "Password authentication already turned off"
-    else
-        cp --verbose $conf{, .backup}
-        if grep --quiet "^#$key" $conf
-            sed --in-place "s/^#$key.*\$/$key no/" $conf
-        else
-            echo "$key no" | tee --append $conf
-        end
-        diff --color $conf{.backup,}
-    end
+    sudo config --file=/etc/ssh/sshd_config 'PasswordAuthentication no'
 end
 
-echo "[4] Turn on Pacman color and comparing versions options"
-set pm_conf /etc/pacman.conf
-if test -s $pm_conf # exists and size greater than zero
-    set --local conf $pm_conf
-    set --local keys Color VerbosePkgLists
-    for key in $keys
-        if grep --quiet "^$key\$" $conf
-            echo "Option `$key` already turned on"
-            set --erase keys[(contains --index $key $keys)] # delete key
-        end
-    end
-    if test (count $keys) -gt 0
-        cp --verbose $conf{, .backup}
-        for key in $keys
-            if grep --quiet "^#$key\$" $conf
-                sed --in-place "s/^#$key\$/$key/" $conf
-            else
-                echo "$key" | tee --append $conf
-            end
-        end
-        diff --color $conf{.backup,}
-    end
-end
+echo "[4] Turn on Pacman misc options"
+sudo config --file=/etc/pacman.conf Color VerbosePkgLists 'ParallelDownloads = 5'
+
+echo "[5] Optimize network"
+# (https://wiki.archlinux.org/title/Sysctl#Enable_TCP_Fast_Open)
+# set --append params 'net.ipv4.tcp_fastopen = 3'
+# (https://wiki.archlinux.org/title/Sysctl#Enable_BBR)
+sudo modprobe tcp_bbr
+set --append params 'net.core.default_qdisc = cake' 'net.ipv4.tcp_congestion_control = bbr'
+sudo config --file=/etc/sysctl.d/01-network-optimization.conf $params
+sudo sysctl --system
+
+echo "[6] Set time zone and turn on NTP service"
+sudo timedatectl set-timezone Asia/Shanghai
+sudo timedatectl set-ntp true
