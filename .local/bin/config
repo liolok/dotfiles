@@ -1,35 +1,57 @@
-#!/bin/fish
-# Mess around with simple INI-like configuration files
+#!/usr/bin/env fish
+# Mess around with configuration files
 
-argparse --ignore-unknown 'file=' 'backup=?' -- $argv
+set status_err_arg 1
+set status_err_file 2
+set status_no_change 3
 
-set --query _flag_file; or echo 'Missing `--file=FILE` argument' && exit 1
+argparse --min-args=1 "file=" -- $argv; or exit $status_err_arg
+
+if not set --query _flag_file or test -z "$_flag_file"
+    echo 'Error: missing option --file or its argument'
+    exit $status_err_arg
+end
+
 set file $_flag_file
+
+if test -d $file
+    echo "Error: $file is not a file but a directory"
+    exit $status_err_file
+end
+
+test -L $file; and set file (realpath $file)
+
+if not test -w $file
+    echo "Error: $file is not marked as writable"
+    exit $status_err_file
+end
 
 if test -s "$file" # file already exists and has content
     for arg in $argv
-        if grep --line-number "^$arg" $file
-            echo "Configuration `$arg` already exists"
-            set --erase argv[(contains --index "$arg" $argv)] # delete item
+        if grep --line-number --word-regexp "^$arg" $file
+            echo "Info: configuration $arg already exists, won't be changed"
+            set --erase argv[(contains --index $arg $argv)] # delete item
         end
     end
-    test -n "$argv"; or echo "Nothing to configure, no changes to `$file` at all" && exit
+    if test -z "$argv"
+        echo "Info: Nothing to configure, no changes to $file at all"
+        exit $status_no_change
+    end
 
-    set backup $_flag_backup
     set suffix (string sub --length 7 (sha256sum $file))
-    test -n "$backup"; or set backup $file.$suffix
-    cp --archive --verbose $file $backup; or set --erase backup
+    set backup $file.$suffix
+    if not cp --archive --verbose $file $backup
+        echo "Warn: failed to backup $backup"
+        set --erase backup
+    end
 end
-
-touch $file; or echo "Cannot create `$file`" && exit 2
-test -w "$file"; or echo "Cannot write `$file`" && exit 3
 
 for arg in $argv
     set --local key (string split ' ' $arg --fields 1)
-    if grep --quiet "^#$key" $file
-        sed --in-place "s/^#$key.*\$/$arg/" $file
+    if grep --quiet --word-regexp "^#$key" $file
+        sed --in-place "s/^#$key.*\$/$arg/" $file; or exit
     else
-        echo $arg | tee --append $file
+        echo $arg | tee --append $file; or exit
     end
 end
 
