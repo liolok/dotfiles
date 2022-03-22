@@ -6,7 +6,11 @@ cat (fallback $XDG_CONFIG_HOME ~/.config)/package-list/{fish, nano} \
 
 echo "[2] Cleanup bash dotfiles to user cache directory"
 set bash_files ~/.bash*
-test -n "$bash_files"; and mv --verbose $bash_files (fallback $XDG_CACHE_HOME ~/.cache)
+if test -n "$bash_files"
+    set bash_dir (fallback $XDG_CACHE_HOME ~/.cache)/bash_backup
+    mkdir --parents $bash_dir
+    for $file in $bash_files; mv --verbose $file $bash_dir; end
+end
 
 # (https://wiki.archlinux.org/title/OpenSSH#Force_public_key_authentication)
 echo "[3] Turn off SSHD password authentication if user public key file exists"
