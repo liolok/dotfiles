@@ -1,4 +1,4 @@
-# (https://starship.rs/presets/#plain-text-symbols)
+# (https://starship.rs/presets/plain-text.html)
 
 [character]
 success_symbol = "[>](bold green)"
@@ -17,6 +17,9 @@ deleted = "x"
 
 [aws]
 symbol = "aws "
+
+[cobol]
+symbol = "cobol "
 
 [conda]
 symbol = "conda "
@@ -90,6 +93,9 @@ symbol = "pl "
 [php]
 symbol = "php "
 
+[pulumi]
+symbol = "pulumi "
+
 [purescript]
 symbol = "purs "
 
@@ -104,6 +110,9 @@ symbol = "rs "
 
 [scala]
 symbol = "scala "
+
+[sudo]
+symbol = "sudo "
 
 [swift]
 symbol = "swift "
