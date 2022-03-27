@@ -3,7 +3,11 @@
 
 alias a 'abbr --add'
 
-alias l 'exa --all --git --group --long --time-style=iso'
+if command --query exa
+    alias l 'exa --all --git --group --long --time-style=long-iso'
+else
+    alias l 'ls --almost-all -l --human-readable --time-style=long-iso'
+end
 
 # Pastebin: `command | pb` or `pb < /path/to/file`
 # More usage: (https://fars.ee/#examples)

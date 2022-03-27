@@ -1,34 +1,38 @@
 # ~/.config/fish/conf.d/01-env-var.fish
-# (https://fishshell.com/docs/current/#exporting-variables)
 
-# Real home directory
+# Real home directory (for ~/.local/bin/fakehome)
+# (https://fishshell.com/docs/current/cmds/status.html?highlight=is-interactive)
 # (https://man.archlinux.org/man/getent.1)
-# (https://man.archlinux.org/man/passwd.5.en)
-x HOME_REAL (string split : (getent passwd (whoami)) --fields 6)
-test $HOME = $HOME_REAL; or x HOME $HOME_REAL
+# (https://man.archlinux.org/man/passwd.5)
+set --local real_home (string split : (getent passwd (whoami)) --fields 6)
+if test -n "$real_home"
+    and test $HOME != $real_home
+    x HOME $real_home
+end
 
-# Export environment variables only when login
+# Prepend user executables search path (only once when login)
 # (https://fishshell.com/docs/current/cmds/status.html?highlight=is-login)
-status is-login; or exit
-
-# Prepend user executables search path
 # (https://fishshell.com/docs/current/cmds/fish_add_path.html)
 # (https://www.freedesktop.org/software/systemd/man/file-hierarchy.html#~/.local/bin/)
-fish_add_path $HOME/.local/bin
+status is-login; and fish_add_path $HOME/.local/bin
 
 # XDG base directory
 # (https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables)
 x XDG_CACHE_HOME  $HOME/.cache
 x XDG_CONFIG_HOME $HOME/.config
 x XDG_DATA_HOME   $HOME/.local/share
+x XDG_STATE_HOME  $HOME/.local/state
 
 # Workarounds for XDG base directory
 # (https://wiki.archlinux.org/title/XDG_Base_Directory#Partial)
 x ANDROID_SDK_ROOT      $XDG_DATA_HOME/android-sdk
 x CARGO_HOME            $XDG_DATA_HOME/cargo
+x CUDA_CACHE_PATH       $XDG_CACHE_HOME/nvidia
+x DVDCSS_CACHE          $XDG_CACHE_HOME/dvdcss
 x GNUPGHOME             $XDG_DATA_HOME/gnupg
+x GOPATH                $XDG_DATA_HOME/go
 x GTK2_RC_FILES         $XDG_CONFIG_HOME/gtk-2.0/gtkrc
-x HISTFILE              $XDG_DATA_HOME/bash/history
+x HISTFILE              $XDG_STATE_HOME/bash/history
 x IPYTHONDIR            $XDG_DATA_HOME/ipython
 x JUPYTER_CONFIG_DIR    $XDG_CONFIG_HOME/jupyter
 x KDEHOME               $XDG_DATA_HOME/kde
@@ -37,6 +41,8 @@ x NPM_CONFIG_USERCONFIG $XDG_CONFIG_HOME/npm/npmrc
 x PYTHONSTARTUP         $XDG_CONFIG_HOME/python/startup.py
 x PYLINTHOME            $XDG_CACHE_HOME/python-pylint
 x RUSTUP_HOME           $XDG_DATA_HOME/rustup
+x SQLITE_HISTORY        $XDG_DATA_HOME/sqlite/history
+x SSB_HOME              $XDG_DATA_HOME/zoom
 x WGETRC                $XDG_CONFIG_HOME/wget/config.ini
 x XAUTHORITY            $XDG_RUNTIME_DIR/Xauthority
 

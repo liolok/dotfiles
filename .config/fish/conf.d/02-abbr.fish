@@ -9,6 +9,12 @@ a fh 'free --human'
 
 a nf 'neofetch'
 
-a pm 'sudo pacman'
+a pm 'pacman'
+a pmq 'pacman --query'
+a pmr 'pacman --remove'
+a pms 'pacman --sync'
 
-a sc 'sudo systemctl'
+a sc 'systemctl'
+a sce 'systemctl edit'
+a scr 'systemctl restart'
+a scs 'systemctl status'
