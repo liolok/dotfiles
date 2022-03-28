@@ -1,9 +1,23 @@
-function roll --description "Upgrade the system and maybe install new packages"
-    # (https://wiki.archlinux.org/index.php/Pacman#Upgrading_packages)
-    sudo pacman -Syu
-    if test -n "$argv"; sudo pacman -S --needed $argv; end
-    # (https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Removing_unused_packages_(orphans))
-    # sudo pacman -Rns (pacman -Qtdq) # outputs error if no orphans found
-    # (https://github.com/farseerfc/dotfiles/blob/d4f353104bc4ade853c55ad9d8d3cd7d56bb7044/zsh/.bashrc#L62)
-    pacman -Qtdq | ifne sudo pacman -Rcs - # `ifne` depends on package `moreutils`
+function roll --description "Upgrade system, install new packages, and remove orphans."
+    set pm pacman
+    if not test (whoami) = root
+        and command --query sudo
+        set --prepend pm sudo
+    end
+
+    echo '[1] Upgrade system'
+    # https://wiki.archlinux.org/title/Pacman#Upgrading_packages
+    $pm --sync --refresh --sysupgrade # -Syu
+    or return 1
+
+    echo '[2] Install new packages'
+    test -n "$argv" # non-zero length argument vector, try to install
+    and $pm --sync --needed $argv
+
+    echo '[3] Remove orphans'
+    # https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Removing_unused_packages_(orphans)
+    set orphans (pacman --query --unrequired --deps --quiet) # -Qtdq
+    test -z "$orphans" # zero length, nothing to remove
+    or $pm --remove --nosave --recursive $orphans # -Rns
+    or return 3
 end
