@@ -1,35 +1,52 @@
 #!/bin/fish
 
-echo "[1] Install packages for fish shell and nano editor"
-cat (fallback $XDG_CONFIG_HOME ~/.config)/package-list/{fish, nano} \
-    | sudo pacman --sync --refresh --sysupgrade --needed --asexplicit -
+# Try to find my own configuration script
+string match --quiet "$HOME*" (command --search config) # in PATH, that's good
+or alias config (status dirname)/config # in same directory as current script (hopefully)
 
-echo "[2] Cleanup bash dotfiles to user cache directory"
-set bash_files ~/.bash*
-if test -n "$bash_files"
-    set bash_dir (fallback $XDG_CACHE_HOME ~/.cache)/bash_backup
-    mkdir --parents $bash_dir
-    for $file in $bash_files; mv --verbose $file $bash_dir; end
+
+echo "[!] Generate and set locale"
+# https://wiki.archlinux.org/title/Locale
+if test -z "$LANG"
+    or test "$LANG" = 'C'
+    config --file=/etc/locale.gen
+    and locale-gen
+    and config --file=/etc/locale.conf
 end
 
-# (https://wiki.archlinux.org/title/OpenSSH#Force_public_key_authentication)
-echo "[3] Turn off SSHD password authentication if user public key file exists"
-if test -s ~/.ssh/authorized_keys # exists and size greater than zero
-    sudo config --file=/etc/ssh/sshd_config 'PasswordAuthentication no'
+echo "[!] Set time zone and enable NTP service"
+# https://wiki.archlinux.org/title/System_time#Time_zone
+test -L /etc/localtime # should be symbol link to /usr/share/zoneinfo/...
+or timedatectl set-timezone Asia/Shanghai
+# https://man.archlinux.org/man/systemd-timesyncd.service.8
+systemctl is-active --quiet systemd-timesyncd.service
+or timedatectl set-ntp true
+
+echo "[*] Configure pacman"
+config --file=/etc/pacman.conf
+# https://github.com/archlinuxcn/repo#usage
+contains archlinuxcn (pacman-conf --repo-list)
+and pacman --sync --refresh # -Sy
+and pacman --sync archlinuxcn-keyring
+
+echo "[!] Install packages"
+set pkgs (cat (fallback $XDG_CONFIG_HOME ~/.config)/package-list/{fish, nano})
+pacman --sync --refresh --sysupgrade $pkgs # -Syu
+
+echo "[*] Cleanup bash dotfiles"
+for file in ~/.bash*
+    set --local new_name (bashname $file).(string sub --length 7 (sha256sum $file))
+    mv --interactive --verbose $file (fallback $XDG_CACHE_HOME ~/.cache)/$new_name
 end
 
-echo "[4] Turn on Pacman misc options"
-sudo config --file=/etc/pacman.conf Color VerbosePkgLists 'ParallelDownloads = 5'
+echo "[!] Disable SSHD password authentication if user public key file exists"
+# https://wiki.archlinux.org/title/OpenSSH#Force_public_key_authentication
+test -s ~/.ssh/authorized_keys # exists and size greater than zero
+and config --file=/etc/ssh/sshd_config
 
-echo "[5] Optimize network"
-# (https://wiki.archlinux.org/title/Sysctl#Enable_TCP_Fast_Open)
-# set --append params 'net.ipv4.tcp_fastopen = 3'
+echo "[!] Enable BBR"
 # (https://wiki.archlinux.org/title/Sysctl#Enable_BBR)
-sudo modprobe tcp_bbr
-set --append params 'net.core.default_qdisc = cake' 'net.ipv4.tcp_congestion_control = bbr'
-sudo config --file=/etc/sysctl.d/01-network-optimization.conf $params
-sudo sysctl --system
-
-echo "[6] Set time zone and turn on NTP service"
-sudo timedatectl set-timezone Asia/Shanghai
-sudo timedatectl set-ntp true
+modprobe tcp_bbr # load kernel module for one time
+and config --file=/etc/modules-load.d/bbr.conf # auto load
+and config --file=/etc/sysctl.d/01-bbr.conf
+and sysctl --load=/etc/sysctl.d/01-bbr.conf
