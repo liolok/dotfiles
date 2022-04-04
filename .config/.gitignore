@@ -23,5 +23,6 @@
 !python/
 !ssh/
 !starship.toml
+!sysctl.d/
 !tmux/
 !wget/
