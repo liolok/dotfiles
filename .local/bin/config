@@ -1,58 +1,85 @@
 #!/usr/bin/env fish
-# Mess around with configuration files
+# Merge or copy user configuration to /etc
+# https://www.gnu.org/software/diffutils/manual/diffutils.html#Interactive-Merging
 
-set status_err_arg 1
-set status_err_file 2
-set status_no_change 3
+set status_success      0
+set status_err_arg      1
+set status_err_file     2
+set status_no_change    3
+set status_err_copy     4
+set status_err_env      5
 
-argparse --min-args=1 "file=" -- $argv; or exit $status_err_arg
+argparse "file=" -- $argv
+or exit $status_err_arg
 
-if not set --query _flag_file or test -z "$_flag_file"
+if not set --query _flag_file
+    or test -z "$_flag_file"
     echo 'Error: missing option --file or its argument'
     exit $status_err_arg
 end
 
 set file $_flag_file
 
-if test -d $file
-    echo "Error: $file is not a file but a directory"
-    exit $status_err_file
+# Run by sudo, may get wrong environment to find user configuration
+if test -n "$SUDO_USER"
+    set --local real_user $SUDO_USER
+    # https://man.archlinux.org/man/getent.1 https://man.archlinux.org/man/passwd.5
+    set --local real_home (string split : (getent passwd "$real_user") --fields 6)
+    if test "$HOME" != "$real_home"
+        echo "Error: wrong sudo environment, consider append --preserve-env (-E)"
+        exit $status_err_env
+    end
 end
 
-test -L $file; and set file (realpath $file)
+# Corresponding configuration file under home directory, along with other dotfiles.
+set home_conf $XDG_CONFIG_HOME
+test -n "$home_conf"; or set home_conf ~/.config
+set user_file (string replace /etc $home_conf $file)
 
-if not test -w $file
-    echo "Error: $file is not marked as writable"
-    exit $status_err_file
-end
-
-if test -s "$file" # file already exists and has content
-    for arg in $argv
-        if grep --line-number --word-regexp "^$arg" $file
-            echo "Info: configuration $arg already exists, won't be changed"
-            set --erase argv[(contains --index $arg $argv)] # delete item
+if test -s $user_file
+    if test -s $file
+        # https://www.gnu.org/software/diffutils/manual/diffutils.html#sdiff-Option-Summary
+        set --local options --suppress-common-lines # avoid spamming
+        # https://www.gnu.org/software/diffutils/manual/diffutils.html#Specified-Lines
+        set --append options --ignore-matching-lines='^#' # ignore comments
+        diff $options $file $user_file --brief
+        set --local diff_user $status
+        set --local _status_diff_found_none 0
+        set --local _status_diff_found_some 1
+        if test $diff_user -eq $_status_diff_found_some
+            set backup $file.(string sub --length 7 (sha256sum $file))
+            cp --archive $file $backup
+            or exit $status_err_copy
+            sdiff $options $backup $user_file --output=$file
+            diff --color $options $backup $file
+            set --local diff_backup $status
+            if test $diff_backup -eq $_status_diff_found_some
+                echo "Info: old configuration copied to $backup"
+                exit $status_success
+            else if test $diff_backup -eq $_status_diff_found_none
+                rm $backup
+                echo "Info: no change to $file at all"
+                exit $status_no_change
+            else
+                echo "Warn: fail to diff $backup $file"
+                echo "Warn: consider manually handling them"
+                exit $status_success
+            end
+        else if test $diff_user -eq $_status_diff_found_none
+            echo "Info: $file and $user_file already have same configurations"
+            exit $status_no_change
+        else
+            echo "Warn: fail to diff $file $user_file"
+            echo "Warn: consider manually handling them"
+            exit $status_no_change
         end
-    end
-    if test -z "$argv"
-        echo "Info: Nothing to configure, no changes to $file at all"
-        exit $status_no_change
-    end
-
-    set suffix (string sub --length 7 (sha256sum $file))
-    set backup $file.$suffix
-    if not cp --archive --verbose $file $backup
-        echo "Warn: failed to backup $backup"
-        set --erase backup
-    end
-end
-
-for arg in $argv
-    set --local key (string split ' ' $arg --fields 1)
-    if grep --quiet --word-regexp "^#$key" $file
-        sed --in-place "s/^#$key.*\$/$arg/" $file; or exit
     else
-        echo $arg | tee --append $file; or exit
+        echo "Info: $file doesn't exist yet or has no content"
+        echo "Info: copy $user_file to $file"
+        cp --verbose $user_file $file
+        or exit $status_err_copy
     end
+else
+    echo "Error: $user_file doesn't exist yet or has no content"
+    exit $status_err_file
 end
-
-test -f "$backup"; and diff --color $backup $file
