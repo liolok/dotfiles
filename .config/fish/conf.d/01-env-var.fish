@@ -1,13 +1,14 @@
 # ~/.config/fish/conf.d/01-env-var.fish
 
-# Real home directory (for ~/.local/bin/fakehome)
-# (https://fishshell.com/docs/current/cmds/status.html?highlight=is-interactive)
-# (https://man.archlinux.org/man/getent.1)
-# (https://man.archlinux.org/man/passwd.5)
-set --local real_home (string split : (getent passwd (whoami)) --fields 6)
-if test -n "$real_home"
-    and test $HOME != $real_home
-    x HOME $real_home
+# Real home directory
+if set --query HOME_FAKE # set by ~/.local/bin/fakehome
+    set --local real_user (fallback $SUDO_USER $USER)
+    # https://man.archlinux.org/man/getent.1 https://man.archlinux.org/man/passwd.5
+    set --local real_home (string split : (getent passwd $real_user) --fields 6)
+    if test -n "$real_home"
+        x HOME $real_home
+        set --erase HOME_FAKE
+    end
 end
 
 # Prepend user executables search path (only once when login)
