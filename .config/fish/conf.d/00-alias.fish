@@ -1,7 +1,7 @@
 # ~/.config/fish/conf.d/00-alias.fish
 # (https://fishshell.com/docs/current/cmds/alias.html)
 
-alias a 'abbr --add'
+alias a 'abbr --add --global'
 
 if command --query exa
     alias l 'exa --all --git --group --long --time-style=long-iso'
