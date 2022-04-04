@@ -1,6 +1,8 @@
 # ~/.config/fish/conf.d/50-prompt.fish
 
 if command --query starship
+    and status is-interactive
+
     set --local conf $XDG_CONFIG_HOME
     test -n "$conf"; or set conf ~/.config
     set conf $conf/starship.toml
