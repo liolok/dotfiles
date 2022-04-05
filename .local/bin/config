@@ -40,6 +40,8 @@ if test -s $user_file
     if test -s $file
         # https://www.gnu.org/software/diffutils/manual/diffutils.html#sdiff-Option-Summary
         set --local options --suppress-common-lines # avoid spamming
+        # https://www.gnu.org/software/diffutils/manual/diffutils.html#White-Space
+        set --append options --ignore-all-space # avoid spamming
         # https://www.gnu.org/software/diffutils/manual/diffutils.html#Specified-Lines
         set --append options --ignore-matching-lines='^#' # ignore comments
         diff $options $file $user_file --brief
