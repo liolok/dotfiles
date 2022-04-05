@@ -7,20 +7,17 @@ or alias config (status dirname)/config # in same directory as current script (h
 
 echo "[!] Generate and set locale"
 # https://wiki.archlinux.org/title/Locale
-if test -z "$LANG"
-    or test "$LANG" = 'C'
-    config --file=/etc/locale.gen
-    and locale-gen
-    and config --file=/etc/locale.conf
-end
+config --file=/etc/locale.gen
+and locale-gen
+and config --file=/etc/locale.conf
 
 echo "[!] Set time zone and enable NTP service"
 # https://wiki.archlinux.org/title/System_time#Time_zone
 test -L /etc/localtime # should be symbol link to /usr/share/zoneinfo/...
-or timedatectl set-timezone Asia/Shanghai
+or timedatectl set-timezone --verbose Asia/Shanghai
 # https://man.archlinux.org/man/systemd-timesyncd.service.8
 systemctl is-active --quiet systemd-timesyncd.service
-or timedatectl set-ntp true
+or timedatectl set-ntp --verbose true
 
 echo "[*] Configure pacman"
 config --file=/etc/pacman.conf
@@ -35,7 +32,7 @@ pacman --sync --refresh --sysupgrade $pkgs # -Syu
 
 echo "[*] Cleanup bash dotfiles"
 for file in ~/.bash*
-    set --local new_name (bashname $file).(string sub --length 7 (sha256sum $file))
+    set --local new_name (basename $file).(string sub --length 7 (sha256sum $file))
     mv --interactive --verbose $file (fallback $XDG_CACHE_HOME ~/.cache)/$new_name
 end
 
