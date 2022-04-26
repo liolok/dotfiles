@@ -14,14 +14,18 @@ a nf neofetch
 
 a pfb 'pkgfile --verbose --binaries'
 
-a pm pacman
-a pmq 'pacman --query'
+a pm    pacman
+a pmq  'pacman --query'
 a pmqi 'pacman --query --info'
 a pmqo 'pacman --query --owns'
-a pmr 'pacman --remove'
-a pms 'pacman --sync'
+a pmr  'pacman --remove'
+a pms  'pacman --sync'
+a pmsi 'pacman --sync --info'
 
-a sc systemctl
+a poweroff 'sync; and poweroff'
+a reboot   'sync; and reboot'
+
+a sc   systemctl
 a sce 'systemctl edit'
 a scr 'systemctl restart'
 a scs 'systemctl status'
