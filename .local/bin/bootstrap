@@ -14,10 +14,10 @@ and config --file=/etc/locale.conf
 echo "[!] Set time zone and enable NTP service"
 # https://wiki.archlinux.org/title/System_time#Time_zone
 test -L /etc/localtime # should be symbol link to /usr/share/zoneinfo/...
-or timedatectl set-timezone --verbose Asia/Shanghai
+or timedatectl set-timezone Asia/Shanghai
 # https://man.archlinux.org/man/systemd-timesyncd.service.8
 systemctl is-active --quiet systemd-timesyncd.service
-or timedatectl set-ntp --verbose true
+or timedatectl set-ntp true
 
 echo "[*] Configure pacman"
 config --file=/etc/pacman.conf
