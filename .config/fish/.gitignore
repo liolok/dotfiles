@@ -1,2 +1,4 @@
 !conf.d/
 !functions/
+!*.fish
+config.fish
