@@ -1,6 +1,9 @@
 # ~/.config/fish/conf.d/01-env-var.fish
 # https://fishshell.com/docs/current/faq#how-do-i-set-or-clear-an-environment-variable
 
+functions --query x # alias already defined
+or alias x 'set --global --export'
+
 # Real home directory
 if set --query HOME_FAKE # set by ~/.local/bin/fakehome
     set --local real_user (fallback $SUDO_USER $USER)

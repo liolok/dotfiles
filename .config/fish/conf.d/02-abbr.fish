@@ -1,6 +1,9 @@
 # ~/.config/fish/conf.d/02-abbr.fish
 # https://fishshell.com/docs/current/cmds/abbr
 
+functions --query a # alias already defined
+or alias a 'abbr --add --global'
+
 status is-interactive
 or exit # only add abbreviations under interactive sessions
 
