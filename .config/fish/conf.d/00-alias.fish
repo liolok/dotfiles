@@ -1,5 +1,5 @@
 # ~/.config/fish/conf.d/00-alias.fish
-# (https://fishshell.com/docs/current/cmds/alias.html)
+# https://fishshell.com/docs/current/cmds/alias.html
 
 alias a 'abbr --add --global'
 
@@ -10,11 +10,11 @@ else
 end
 
 # Pastebin: `command | pb` or `pb < /path/to/file`
-# More usage: (https://fars.ee/#examples)
+# More usage: https://fars.ee/#examples
 alias pb 'curl -F "c=@-" "https://fars.ee/"'
 
-# (https://wiki.archlinux.org/title/Fish#Make_su_launch_fish)
+# https://wiki.archlinux.org/title/Fish#Make_su_launch_fish
 alias su 'su --shell=/usr/bin/fish'
 
-# (https://fishshell.com/docs/current/#exporting-variables)
+# https://fishshell.com/docs/current/faq.html#how-do-i-set-or-clear-an-environment-variable
 alias x 'set --global --export'
