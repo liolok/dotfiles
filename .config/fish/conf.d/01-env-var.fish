@@ -6,11 +6,15 @@ or alias x 'set --global --export'
 
 # Real home directory
 if set --query HOME_FAKE # set by ~/.local/bin/fakehome
-    set --local real_user (fallback $SUDO_USER $USER)
+    if set --query SUDO_USER
+        set --local user $SUDO_USER
+    else
+        set --local user (whoami)
+    end
     # https://man.archlinux.org/man/getent.1 https://man.archlinux.org/man/passwd.5
-    set --local real_home (string split : (getent passwd $real_user) --fields 6)
-    if test -n "$real_home"
-        x HOME $real_home
+    set --local home (string split : (getent passwd $user) --fields 6)
+    if string length --quiet $home
+        x HOME $home
         set --erase HOME_FAKE
     end
 end
