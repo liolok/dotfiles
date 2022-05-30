@@ -1,4 +1,5 @@
 # ~/.config/fish/functions/roll.fish
+
 function roll --description "Upgrade system, install new packages, and remove orphans."
     set pm pacman
     if not test (whoami) = root

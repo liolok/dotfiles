@@ -3,6 +3,7 @@
 # Simplest syntax: bind KEY ACTION(S)
 # KEY: Run `fish_key_reader` to get key sequence, which depends on terminals.
 # ACTIONS: https://fishshell.com/docs/current/cmds/bind#special-input-functions
+
 function fish_user_key_bindings
     # Tested on Gnome terminal, Konsole and TTY
     bind \e\x7F backward-kill-bigword # Alt Backspace
