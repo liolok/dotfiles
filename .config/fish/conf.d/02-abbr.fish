@@ -15,7 +15,7 @@ a fh 'free --human'
 
 a nf neofetch
 
-a pfb 'pkgfile --verbose --binaries'
+a pkg 'pkgfile --verbose --binaries'
 
 a pm    pacman
 a pmq  'pacman --query'
@@ -24,6 +24,7 @@ a pmqo 'pacman --query --owns'
 a pmr  'pacman --remove'
 a pms  'pacman --sync'
 a pmsi 'pacman --sync --info'
+a pmss 'pacman --sync --search'
 
 a poweroff 'sync; and poweroff'
 a reboot   'sync; and reboot'
