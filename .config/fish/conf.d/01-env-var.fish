@@ -64,9 +64,6 @@ x GTK_IM_MODULE fcitx
 x QT_IM_MODULE  fcitx
 x XMODIFIERS    @im=fcitx
 
-# https://wiki.archlinux.org/title/KDE#From_the_console
-x DESKTOP_SESSION plasma
-
 # https://wiki.archlinux.org/title/GnuPG#Configure_pinentry_to_use_the_correct_TTY
 x GPG_TTY (tty)
 

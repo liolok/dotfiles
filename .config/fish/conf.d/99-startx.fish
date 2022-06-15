@@ -20,4 +20,4 @@ or set --local data_home ~/.local/share
 set --local data_xorg $data_home/xorg
 mkdir --parents $data_xorg
 
-exec startx /usr/bin/startplasma-x11 &> $data_xorg/session.log
+DESKTOP_SESSION=plasma exec startx /usr/bin/startplasma-x11 &> $data_xorg/session.log
