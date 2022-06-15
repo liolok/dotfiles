@@ -24,6 +24,7 @@ function fish_prompt --description 'Write out the prompt'
 
     # color the prompt differently when we're root
     set --local color_cwd $fish_color_cwd
+    set --local color_vcs 444444 # should be grey
     set --local suffix '>'
     if functions --query fish_is_root_user
         and fish_is_root_user
@@ -37,8 +38,9 @@ function fish_prompt --description 'Write out the prompt'
     set_color $color_cwd
     printf ' '
     printf (prompt_pwd --full-length-dirs 3)
-    set_color normal
+    set_color $color_vcs
     printf (fish_vcs_prompt)
 
+    set_color normal
     printf "\n$suffix "
 end
