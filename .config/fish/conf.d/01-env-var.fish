@@ -51,12 +51,10 @@ x RUSTUP_HOME           $XDG_DATA_HOME/rustup
 x SQLITE_HISTORY        $XDG_DATA_HOME/sqlite/history
 x SSB_HOME              $XDG_DATA_HOME/zoom
 x WGETRC                $XDG_CONFIG_HOME/wget/config.ini
-x XAUTHORITY            $XDG_RUNTIME_DIR/Xauthority
 
-# Use nano as default text editor
-# https://wiki.archlinux.org/title/Nano#Replacing_vi_with_nano
-x EDITOR nano
-x VISUAL nano
+# Use helix as default text editor
+x EDITOR helix
+x VISUAL helix
 
 # Input method module
 # https://wiki.archlinux.org/title/Fcitx5#Integration
@@ -64,8 +62,16 @@ x GTK_IM_MODULE fcitx
 x QT_IM_MODULE  fcitx
 x XMODIFIERS    @im=fcitx
 
+# https://wiki.archlinux.org/title/SSH_keys#Calling_x11-ssh-askpass_with_ssh-add
+x SSH_ASKPASS ksshaskpass
+
 # https://wiki.archlinux.org/title/GnuPG#Configure_pinentry_to_use_the_correct_TTY
 x GPG_TTY (tty)
 
 # https://wiki.archlinux.org/title/Uniform_look_for_Qt_and_GTK_applications#Consistent_file_dialog
 x GTK_USE_PORTAL 1
+
+# https://aur.archlinux.org/packages/esp-idf
+x IDF_PATH          /opt/esp-idf
+x ESPIDF            /opt/esp-idf
+x IDF_TOOLS_PATH    $XDG_DATA_HOME/espressif
