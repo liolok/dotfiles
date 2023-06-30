@@ -11,6 +11,7 @@
 !git/
 !gtk-3.0/
 !gtk-4.0/
+!helix/
 !Kvantum/
 !locale.conf
 !locale.gen

@@ -1,0 +1,33 @@
+# ~/.config/helix/config.toml
+
+# https://docs.helix-editor.com/configuration.html
+
+theme = "nord"
+
+[editor]
+rulers = [80, 120]
+
+[editor.statusline]
+left = ["mode", "spinner"]
+center = ["file-name", "file-modification-indicator"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "underline"
+select = "underline"
+
+[editor.whitespace.render]
+tab = "all"
+
+[editor.indent-guides]
+render = true
+character = "╎"
+
+# https://docs.helix-editor.com/remapping.html
+
+[keys.normal]
+C-x = ":write-quit"
