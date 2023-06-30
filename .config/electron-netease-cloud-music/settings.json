@@ -1,5 +1,5 @@
 {
-    "autoPlay": false,
+    "autoPlay": true,
     "autoSign": true,
     "bitRate": "ex",
     "bitRateDownload": "ex",
@@ -9,10 +9,11 @@
     "windowZoom": null,
     "showTrayIcon": false,
     "trayIconVariety": "light",
-    "exitOnWindowClose": false,
+    "exitOnWindowClose": true,
     "minimizeOnStartup": false,
     "themePrimaryColor": "#2e3440",
     "themeSecondaryColor": "#d50000",
     "themeVariety": "light",
-    "autoReplacePlaylist": true
+    "autoReplacePlaylist": true,
+    "lyricTranslation": "translation"
 }
