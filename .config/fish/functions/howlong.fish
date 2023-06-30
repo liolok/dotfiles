@@ -1,29 +1,32 @@
 # ~/.config/fish/functions/howlong.fish
 # https://fishshell.com/docs/current/language#envvar-CMD_DURATION
+# https://fishshell.com/docs/current/cmds/history
 # https://fishshell.com/docs/current/cmds/math
+# https://fishshell.com/docs/current/cmds/set_color
 
 function howlong --description "How long did last command take?"
-    set duration $CMD_DURATION
+    set duration $CMD_DURATION # in milliseconds
 
     printf "Last command `%s` took " (history --max 1)
-    set S 1000
+    set S 1000 # one second
     if test $duration -gt $S
-        set M (math "60 * $S")
+        set M (math "60 * $S") # one minute
         if test $duration -gt $M
-            set H (math "60 * $M")
-            if test $duration -gt $H
-                set h (math floor "$duration / $H")
-                printf "$h hour"; test $h -gt 1; and printf "s"; printf ", "
-                set duration (math "$duration - $h * $H")
-            end
             set m (math floor "$duration / $M")
-            printf "$m minute"; test $m -gt 1; and printf "s"; printf ", "
+            set_color red; printf $m; set_color normal
+            printf ' minute'; test $m -gt 1; and printf 's'; printf ' '
             set duration (math "$duration - $m * $M")
         end
         set s (math round "$duration / $S")
-        test $s -gt 0; and printf "$s second"; test $s -gt 1; and printf "s"
+        if test $s -gt 0
+            set_color yellow; printf $s; set_color normal
+            printf ' second'; test $s -gt 1; and printf 's'
+        end
+    else if test $duration -gt 0
+        set_color green; printf $duration; set_color normal
+        printf ' millisecond'; test $duration -gt 1; and printf 's'
     else
-        printf "$duration millisecond"; test $duration -gt 1; and printf "s"
+        printf 'no time at all'
     end
     printf "\n"
 end
