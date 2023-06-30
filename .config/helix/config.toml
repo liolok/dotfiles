@@ -5,6 +5,7 @@
 theme = "nord"
 
 [editor]
+true-color = true
 rulers = [80, 120]
 
 [editor.statusline]
