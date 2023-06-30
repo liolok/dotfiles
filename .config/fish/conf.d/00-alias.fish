@@ -9,6 +9,8 @@ else
     alias l 'ls --almost-all -l --human-readable --time-style=long-iso'
 end
 
+alias hx helix
+
 # Pastebin: `command | pb` or `pb < /path/to/file`
 # More usage: https://fars.ee/#examples
 alias pb 'curl -F "c=@-" "https://fars.ee/"'
