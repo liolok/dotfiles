@@ -1,4 +1,4 @@
-#!/bin/fish
+#!/usr/bin/env fish
 
 # Try to find my own configuration script
 string match --quiet "$HOME*" (command --search config) # in PATH, that's good
@@ -40,9 +40,10 @@ echo "[!] Disable SSHD password authentication if user public key file exists"
 # https://wiki.archlinux.org/title/OpenSSH#Force_public_key_authentication
 test -s ~/.ssh/authorized_keys # exists and size greater than zero
 and config --file=/etc/ssh/sshd_config
+and systemctl restart sshd
 
 echo "[!] Enable BBR"
-# (https://wiki.archlinux.org/title/Sysctl#Enable_BBR)
+# https://wiki.archlinux.org/title/Sysctl#Enable_BBR
 modprobe tcp_bbr # load kernel module for one time
 and config --file=/etc/modules-load.d/bbr.conf # auto load
 and config --file=/etc/sysctl.d/01-bbr.conf
