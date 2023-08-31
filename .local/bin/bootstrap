@@ -27,7 +27,10 @@ and pacman --sync --refresh # -Sy
 and pacman --sync archlinuxcn-keyring
 
 echo "[!] Install packages"
-set pkgs (cat (fallback $XDG_CONFIG_HOME ~/.config)/package-list/{fish, nano})
+set pkgs (cat (fallback $XDG_CONFIG_HOME ~/.config)/package-list/fish)
+set --append pkgs helix rsync mosh base-devel
+contains archlinuxcn (pacman-conf --repo-list)
+and set --append pkgs fastfetch paru
 pacman --sync --refresh --sysupgrade $pkgs # -Syu
 
 echo "[*] Cleanup bash dotfiles"
