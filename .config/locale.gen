@@ -9,17 +9,11 @@
 #  where <locale> is one of the locales given in /usr/share/i18n/locales
 #  and <charset> is one of the character sets listed in /usr/share/i18n/charmaps
 #
-#  Examples:
-#  en_US ISO-8859-1
-#  en_US.UTF-8 UTF-8
-#  de_DE ISO-8859-1
-#  de_DE@euro ISO-8859-15
-#
 #  The locale-gen command will generate all the locales,
 #  placing them in /usr/lib/locale.
 #
-#  A list of supported locales is included in this file.
-#  Uncomment the ones you need.
+#  A list of supported locales is given in /usr/share/i18n/SUPPORTED
+#  and is included in this file. Uncomment the needed locales below.
 #
 #aa_DJ.UTF-8 UTF-8
 #aa_DJ ISO-8859-1
@@ -99,7 +93,6 @@
 #bs_BA.UTF-8 UTF-8
 #bs_BA ISO-8859-2
 #byn_ER UTF-8
-#C.UTF-8 UTF-8
 #ca_AD.UTF-8 UTF-8
 #ca_AD ISO-8859-15
 #ca_ES.UTF-8 UTF-8
@@ -398,6 +391,7 @@ en_US.UTF-8 UTF-8
 #pt_PT@euro ISO-8859-15
 #quz_PE UTF-8
 #raj_IN UTF-8
+#rif_MA UTF-8
 #ro_RO.UTF-8 UTF-8
 #ro_RO ISO-8859-2
 #ru_RU.KOI8-R KOI8-R
@@ -446,6 +440,7 @@ en_US.UTF-8 UTF-8
 #sv_SE ISO-8859-1
 #sw_KE UTF-8
 #sw_TZ UTF-8
+#syr UTF-8
 #szl_PL UTF-8
 #ta_IN UTF-8
 #ta_LK UTF-8
