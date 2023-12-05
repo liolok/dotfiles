@@ -47,7 +47,5 @@ and systemctl restart sshd
 
 echo "[!] Enable BBR"
 # https://wiki.archlinux.org/title/Sysctl#Enable_BBR
-modprobe tcp_bbr # load kernel module for one time
-and config --file=/etc/modules-load.d/bbr.conf # auto load
-and config --file=/etc/sysctl.d/01-bbr.conf
-and sysctl --load=/etc/sysctl.d/01-bbr.conf
+and config --file=/etc/sysctl.d/51-bbr.conf
+and sysctl --load=/etc/sysctl.d/51-bbr.conf
