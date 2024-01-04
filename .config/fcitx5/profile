@@ -1,6 +1,6 @@
 [Groups/0]
 # Group Name
-Name=Default
+Name=Steam
 # Layout
 Default Layout=cn
 # Default Input Method
@@ -8,16 +8,37 @@ DefaultIM=shuangpin
 
 [Groups/0/Items/0]
 # Name
+Name=shuangpin
+# Layout
+Layout=
+
+[Groups/1]
+# Group Name
+Name=Default
+# Layout
+Default Layout=cn
+# Default Input Method
+DefaultIM=shuangpin
+
+[Groups/1/Items/0]
+# Name
 Name=keyboard-cn
 # Layout
 Layout=
 
-[Groups/0/Items/1]
+[Groups/1/Items/1]
 # Name
 Name=shuangpin
 # Layout
 Layout=cn
 
+[Groups/1/Items/2]
+# Name
+Name=pinyin
+# Layout
+Layout=
+
 [GroupOrder]
 0=Default
+1=Steam
 

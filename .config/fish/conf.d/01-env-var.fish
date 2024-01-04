@@ -50,6 +50,7 @@ x PYLINTHOME            $XDG_CACHE_HOME/python-pylint
 x RUSTUP_HOME           $XDG_DATA_HOME/rustup
 x SQLITE_HISTORY        $XDG_DATA_HOME/sqlite/history
 x SSB_HOME              $XDG_DATA_HOME/zoom
+x TS3_CONFIG_DIR        $XDG_DATA_HOME/ts3client
 x WGETRC                $XDG_CONFIG_HOME/wget/config.ini
 
 # Use helix as default text editor

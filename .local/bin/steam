@@ -4,59 +4,85 @@
 set file_name (basename (status filename)) # get current file base name
 set app $file_name
 set home /home/$app # dedicated home for app in container
-set host_conf (fallback $XDG_CONFIG_HOME ~/.config)
+set host_conf $XDG_CONFIG_HOME; test -n "$host_conf"; or set host_conf ~/.config
 set conf $home/.config
 set host_data /usr/share
-set data $home/.local/share
+set data /usr/share # $home/.local/share
 
-# Commandline options for systemd-nspawn
-set options --as-pid2 --machine=$app --user=$app --chdir=$home
-alias add_options 'set --append options'
+# Command line options for systemd-nspawn
+# set options --as-pid2 --machine=$app --user=$app --chdir=$home
+set options --as-pid2 --machine=arch-steam --user=$app --chdir=$home
+alias add 'set --append'
 
 # Tray
 set host_dbus (string trim --left --chars=unix:path= $DBUS_SESSION_BUS_ADDRESS)
 test -n "$host_dbus"; or set host_dbus /run/user/(id --user)/bus
 set dbus /run/user/host/bus
-add_options --bind-ro=$host_dbus:$dbus --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=$dbus
+add options --bind-ro=$host_dbus:$dbus \
+            --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=$dbus
+add options --bind-ro=$XDG_RUNTIME_DIR/dconf
 
 # Sound
 set host_pulse (string trim --left --chars=unix: $PULSE_SERVER)
 test -n "$host_pulse"; or set host_pulse /run/user/(id --user)/pulse/native
 set pulse /run/user/host/pulse
-add_options --bind-ro=$host_pulse:$pulse --setenv=PULSE_SERVER=unix:$pulse
+add options --bind-ro=$host_pulse:$pulse \
+            --setenv=PULSE_SERVER=unix:$pulse
 
 # Icons
-add_options --bind-ro=$host_data/icons:$data/icons --setenv=XCURSOR_PATH=$data/icons
+add options --bind-ro=$host_data/icons:$data/icons \
+            --setenv=XCURSOR_PATH=$data/icons
+add options --setenv=XCURSOR_THEME=$XCURSOR_THEME \
+            --setenv=XCURSOR_SIZE=$XCURSOR_SIZE
 
 # Fonts
-add_options --bind-ro=$host_data/fonts:$data/fonts --bind-ro=$host_conf/fontconfig:$conf/fontconfig
+add options --bind-ro=$host_data/fonts:$data/fonts \
+            --bind-ro=$host_conf/fontconfig:$conf/fontconfig
 
 # Screenshots
-set host_pictures (xdg-user-dir PICTURES)
+set host_pictures (string trim --right --chars=/ (xdg-user-dir PICTURES))
 test -n "$host_pictures"; or set host_pictures ~/Pictures
 set host_screenshots $host_pictures/Screenshots/Steam
 mkdir --parents $host_screenshots
-add_options --bind=$host_screenshots:$home/screenshots
+add options --bind=$host_screenshots:$home/screenshots
 
 # Display
 # (https://wiki.archlinux.org/title/Systemd-nspawn#Use_an_X_environment)
-add_options --bind-ro=/tmp/.X11-unix/ --setenv=DISPLAY=$DISPLAY
+add options --bind=/tmp/.X11-unix/ --setenv=DISPLAY=$DISPLAY
+#add options --bind=/tmp/.X11-unix/X1
 # (https://wiki.archlinux.org/title/Systemd-nspawn#Avoiding_xhost)
 set xauth_file /tmp/xauth-$app
 touch $xauth_file
 xauth nextract - "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$xauth_file" nmerge -
-add_options --bind=$xauth_file --setenv=XAUTHORITY=$xauth_file
+add options --bind=$xauth_file --setenv=XAUTHORITY=$xauth_file
 
 # Devices
 # (https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html#DeviceAllow=)
-add_options --bind=/dev/dri/ --property=DeviceAllow='char-drm rw' # Graphic cards
-add_options --bind=/dev/input/ --property=DeviceAllow='char-input r' # Joysticks
+#for dev in /dev/nvidia*; add options --bind=$dev; end # NVIDIA graphic cards
+add options --bind=/dev/shm # shared memory
+add options --bind=/dev/dri --property=DeviceAllow='char-drm rw' # AMD/Intel graphic cards
+add options --bind-ro=/dev/input/ --property=DeviceAllow='char-input r' # joysticks
 
 # Scale
-test $hostname = acer-sf; and add_options --setenv=GDK_SCALE=2 --setenv=GDK_DPI_SCALE=0.5
+# add options --setenv=GDK_SCALE=2 --setenv=GDK_DPI_SCALE=0.5
+
+# Input Method Module for Dota2
+# (https://wiki.archlinux.org/title/Fcitx5#Integration)
+add options --setenv=GTK_IM_MODULE=fcitx
+add options --setenv=QT_IM_MODULE=fcitx
+add options --setenv=SDL_IM_MODULE=fcitx
+
+# DNS
+add options --bind-ro=/etc/resolv.conf
 
 echo "List of cmdline options applied to systemd-nspawn:"
 printf "%s\n" $options | sort
 
-# Run container directly into target app, passthrough all arguments.
-sudo systemd-nspawn $options $app $argv
+argparse --ignore-unknown 'i/interactive' -- $argv
+if set --query _flag_interactive
+    or set --query _flag_i
+    sudo systemd-nspawn $options fish --login
+else
+    # Run container directly into target app, passthrough all arguments.
+    pkexec systemd-nspawn $options $app $argv
+end

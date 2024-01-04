@@ -15,7 +15,6 @@
 !Kvantum/
 !locale.conf
 !locale.gen
-!modules-load.d/
 !nano/
 !neofetch/
 !npm/

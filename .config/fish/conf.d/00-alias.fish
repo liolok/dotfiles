@@ -4,7 +4,7 @@
 alias a 'abbr --add --global'
 
 if command --query exa
-    alias l 'exa --all --git --group --long --time-style=long-iso'
+    alias l 'exa --all --git --group --long --time-style=long-iso --group-directories-first'
 else
     alias l 'ls --almost-all -l --human-readable --time-style=long-iso'
 end
