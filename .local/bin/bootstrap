@@ -24,6 +24,8 @@ config --file=/etc/pacman.conf
 # https://github.com/archlinuxcn/repo#usage
 contains archlinuxcn (pacman-conf --repo-list)
 and pacman --sync --refresh # -Sy
+# https://www.archlinuxcn.org/archlinuxcn-keyring-manually-trust-farseerfc-key/
+and pacman-key --lsign-key "farseerfc@archlinux.org"
 and pacman --sync archlinuxcn-keyring
 
 echo "[!] Install packages"
