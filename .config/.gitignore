@@ -3,6 +3,7 @@
 !package-list/
 
 # other apps
+!btop/
 !Code/
 !electron-netease-cloud-music/
 !fcitx5/
